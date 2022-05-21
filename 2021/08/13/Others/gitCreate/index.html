@@ -5,8 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="创建一个新的git仓库并提交代码，后续代码提交流程, html,javascript,css">
-    <meta name="description" content="第一次创建仓库12345git initgit add .git commit -m &amp;#x27;first commit&amp;#x27;git remote add origin git地址git push -u origin master
-">
+    <meta name="description" content="对于Git仓库使用的总结">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -33,7 +32,8 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -378,14 +378,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-18
+                    2022-05-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    145
+                    151
                 </div>
                 
 
@@ -402,14 +402,25 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="第一次创建仓库"><a href="#第一次创建仓库" class="headerlink" title="第一次创建仓库"></a>第一次创建仓库</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;first commit&#x27;</span></span><br><span class="line">git remote add origin git地址</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+                <h4 id="第一次创建仓库"><a href="#第一次创建仓库" class="headerlink" title="第一次创建仓库"></a>第一次创建仓库</h4><pre class="language-javascript" data-language="javascript"><code class="language-javascript">git init
+git add <span class="token punctuation">.</span>
+git commit <span class="token operator">-</span>m <span class="token string">'first commit'</span>
+git remote add origin git地址
+git push <span class="token operator">-</span>u origin master</code></pre>
 
-<h4 id="正常拉取流程"><a href="#正常拉取流程" class="headerlink" title="正常拉取流程"></a>正常拉取流程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git add .// 添加所有文件</span><br><span class="line">git commit -m ‘注释’// 提交到本地</span><br><span class="line">git remote add origin git地址</span><br><span class="line">git pull origin git地址</span><br><span class="line">git push origin master 推送至远程</span><br></pre></td></tr></table></figure>
+<h4 id="正常拉取流程"><a href="#正常拉取流程" class="headerlink" title="正常拉取流程"></a>正常拉取流程</h4><pre class="language-none"><code class="language-none">git add .&#x2F;&#x2F; 添加所有文件
+git commit -m ‘注释’&#x2F;&#x2F; 提交到本地
+git remote add origin git地址
+git pull origin git地址
+git push origin master 推送至远程</code></pre>
 <h4 id="遇到的错误以及解决方法"><a href="#遇到的错误以及解决方法" class="headerlink" title="遇到的错误以及解决方法"></a>遇到的错误以及解决方法</h4><ul>
 <li><code>fatal: refusing to merge unrelated histories</code></li>
 <li>解决方法：<code>git pull origin master --allow-unrelated-histories</code></li>
@@ -542,15 +553,15 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="hexo相关">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="hexo学习">
                         
-                        <span class="card-title">hexo相关</span>
+                        <span class="card-title">hexo学习</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于hexo使用方法总结
                         
                     </div>
                     <div class="publish-info">
@@ -599,7 +610,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于websocket的一些简单理解
                         
                     </div>
                     <div class="publish-info">
@@ -781,7 +792,7 @@
         <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
                    server="netease"
                    type="playlist"
-                   id="1430583016"
+                   id="778901506"
                    fixed='true'
                    autoplay='true'
                    theme='#42b983'
@@ -813,7 +824,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.3k</span>
+                        class="white-color">5k</span>
             
             
             

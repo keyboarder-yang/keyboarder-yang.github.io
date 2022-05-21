@@ -1,0 +1,887 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>设计模式学习 --- 单例模式</title>
+    <url>/2022/05/17/DesignPattern/SingletonPattern/</url>
+    <content><![CDATA[<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Ensure a class has only one instance  and provide a global point of access to it.</p>
+<p>确保一个类只有一个实例，并全局提供这个实例。</p>
+</blockquote>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ol>
+<li><p>通过类的静态方法（es6）</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">singleton</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">static</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>instance<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">singleton</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>instance
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">let</span> s1 <span class="token operator">=</span> singleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token string">'zhangsan'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> s2 <span class="token operator">=</span> singleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token string">'lisi'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>s1 <span class="token operator">===</span> s2<span class="token punctuation">)</span> <span class="token comment">// true</span></code></pre>
+<blockquote>
+<p>缺点：</p>
+<ul>
+<li>用户使用这个类的时候必须知道这是一个单例的类，必须主动调用getInstance方法</li>
+<li>不能直接通过new 关键字进行创建单例，new出来的实例并不是一个单例</li>
+</ul>
+</blockquote>
+</li>
+<li><p>通过构造函数（es6）</p>
+<pre class="language-none"><code class="language-none">class Singleton &#123;
+    constructor(name) &#123;
+        this.name &#x3D; name
+        if(!Singleton.instance) &#123;
+            &#x2F;&#x2F; 将 this 挂载到单例上
+            Singleton.instance &#x3D; this
+        &#125;
+        return Singleton.instance
+    &#125;
+    static getInstance()&#123;
+        console.log(this.name)
+    &#125;
+&#125;
+const a &#x3D; new Singleton(&#39;zs&#39;)
+const b &#x3D; new Singleton(&#39;ls&#39;)
+console.log(a &#x3D;&#x3D;&#x3D; b) &#x2F;&#x2F; true</code></pre>
+
+<blockquote>
+<p>缺点：</p>
+<ul>
+<li>不符合设计模式的设计原则 —- 单一职责原则。（共六大设计模式）</li>
+<li>单一职责原则：对类来说的，即一个类应该只负责一项职责。（高内聚，低耦合）</li>
+</ul>
+</blockquote>
+</li>
+<li><p>通过代理</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">
+<span class="token keyword">function</span> <span class="token function">Class2SingletonClass</span><span class="token punctuation">(</span><span class="token parameter">constructor</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> SingletonCreator <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>SingletonCreator<span class="token punctuation">.</span>instance<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                SingletonCreator<span class="token punctuation">.</span>instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">constructor</span><span class="token punctuation">(</span><span class="token operator">...</span>arguments<span class="token punctuation">)</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">return</span> SingletonCreator<span class="token punctuation">.</span>instance
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> SingletonCreator
+<span class="token punctuation">&#125;</span></code></pre></li>
+</ol>
+<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><ul>
+<li>状态存储—-vuex</li>
+</ul>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">State</span> <span class="token punctuation">&#123;</span>
+    data <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token comment">// 获取对象</span>
+    <span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token string">''</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 存储对象</span>
+    <span class="token function">set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> value
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+]]></content>
+      <categories>
+        <category>DesignPattern</category>
+      </categories>
+      <tags>
+        <tag>单例模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo学习</title>
+    <url>/2022/05/12/Hexo/hexoCommand/</url>
+    <content><![CDATA[<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><pre class="language-none"><code class="language-none">hexo new TitleName #新建文章TitleName
+hexo new page PageName #新建页面PageName---会创建在source目录下
+hexo new page --path a&#x2F;b #在source&#x2F;_post下新建目录a,a中新建文章b
+hexo generate&#x2F;hexo g #生成静态页面至public目录
+hexo server&#x2F;hexo s #开启预览访问端口
+hexo deploy&#x2F;hexo d #部署到GitHub
+hexo d -g #生成并部署到GitHub
+hexo s -g #生产并开启本地服务</code></pre>
+
+<h3 id="上传到github报错"><a href="#上传到github报错" class="headerlink" title="上传到github报错"></a>上传到github报错</h3><blockquote>
+<p>fatal: unable to access ‘<a href="https://github.com/.......%E2%80%98">https://github.com/.......‘</a>: OpenSSL SSL_read: Connection was reset<br>原因：服务器的SSL证书没有经过第三方机构的签署，所以才报错<br>解决方法：<code>git config --global http.sslVerify &quot;false&quot;</code> 解除验证</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo命令</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式学习</title>
+    <url>/2022/05/16/DesignPattern/DesignPattern/</url>
+    <content><![CDATA[<h4 id="1-什么是设计模式"><a href="#1-什么是设计模式" class="headerlink" title="1. 什么是设计模式"></a>1. 什么是设计模式</h4><blockquote>
+<p>设计模式是在软件开发过程中面临的一般问题的解决方案。</p>
+</blockquote>
+<h4 id="2-为什么使用设计模式"><a href="#2-为什么使用设计模式" class="headerlink" title="2.为什么使用设计模式"></a>2.为什么使用设计模式</h4><blockquote>
+<p>使用设计模式是为了重用代码、让代码更容易被他人理解、保证代码可靠性。 项目中合理地运用设计模式可以完美地解决很多问题，每种模式在现实中都有相应的原理来与之对应，每种模式都描述了一个在我们周围不断重复发生的问题，以及该问题的核心解决方案，这也是设计模式能被广泛应用的原因。</p>
+</blockquote>
+<h4 id="3-设计模式的种类（共计23种）"><a href="#3-设计模式的种类（共计23种）" class="headerlink" title="3.设计模式的种类（共计23种）"></a>3.设计模式的种类（共计23种）</h4><ul>
+<li><p>设计模式分为3大类</p>
+<ul>
+<li><p>创建型模式</p>
+<blockquote>
+<p>定义</p>
+</blockquote>
+</li>
+<li><p>结构型模式</p>
+<blockquote>
+<p>定义</p>
+</blockquote>
+</li>
+<li><p>行为型模式</p>
+<blockquote>
+<p>定义</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">模式</th>
+<th align="left">内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">创建型模式</td>
+<td align="left">工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式</td>
+</tr>
+<tr>
+<td align="left">结构型模式</td>
+<td align="left">适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。</td>
+</tr>
+<tr>
+<td align="left">行为型模式</td>
+<td align="left">策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h4 id="4-前端常用设计模式"><a href="#4-前端常用设计模式" class="headerlink" title="4.前端常用设计模式"></a>4.前端常用设计模式</h4><ul>
+<li><p>单例模式</p>
+<blockquote>
+<p>定义：单例模式确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例单例模式。单例模式只应在有真正的 “单一实例” 的需求时才可使用。</p>
+<p>场景：</p>
+<pre><code>1. 需要更严格地控制全局变量时，使用单例模式
+1. 重量级的对象
+</code></pre>
+</blockquote>
+</li>
+<li><p>装饰器模式</p>
+<blockquote>
+<p>定义：装饰模式以对客户端透明的方式扩展对象的功能，是继承关系的一个替代方案，提供比继承更多的灵活性。动态给一个对象增加功能，这些功能可以再动态的撤消。增加由一些基本功能的排列组合而产生的非常大量的功能。</p>
+</blockquote>
+</li>
+<li><p>适配器模式</p>
+<blockquote>
+<p>定义：把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口原因不匹配而无法一起工作的两个类能够一起工作。适配类可以根据参数返还一个合适的实例给客户端。</p>
+</blockquote>
+</li>
+<li><p>观察者模式</p>
+<blockquote>
+<p>定义：观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使他们能够自动更新自己</p>
+</blockquote>
+</li>
+<li><p>策略模式</p>
+<blockquote>
+<p>定义：策略模式针对一组算法，将每一个算法封装到具有共同接口的独立的类中，从而使得它们可以相互替换。策略模式使得算法可以在不影响到客户端的情况下发生变化。策略模把行为和环境分开。环境类负责维持和查询行为类，各种算法在具体的策略类中提供。由于算法和环境独立开来，算法的增减，修改都不会影响到环境和客户端。</p>
+</blockquote>
+</li>
+<li><p>模板模式</p>
+<blockquote>
+<p>定义：模板方法模式准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。先制定一个顶级逻辑框架，而将逻辑的细节留给具体的子类去实现。</p>
+</blockquote>
+</li>
+<li><p>代理模式</p>
+<blockquote>
+<p>定义：代理模式给某一个对象提供一个代理对象，并由代理对象控制对源对象的引用。代理就是一个人或一个机构代表另一个人或者一个机构采取行动。某些情况下，客户不想或者不能够直接引用一个对象，代理对象可以在客户和目标对象直接起到中介的作用。客户端分辨不出代理主题对象与真实主题对象。代理模式可以并不知道真正的被代理对象，而仅仅持有一个被代理对象的接口，这时候代理对象不能够创建被代理对象，被代理对象必须有系统的其他角色代为创建并传入。</p>
+</blockquote>
+</li>
+<li><p>外观模式</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>DesignPattern</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js学习 --- class</title>
+    <url>/2022/05/18/JavaScript/Class/</url>
+    <content><![CDATA[<h4 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h4><blockquote>
+<p>类中constructor内，this指向 new出来的实例。而类中的this指向该构造类。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>类 class</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js学习 --- 闭包</title>
+    <url>/2022/05/21/JavaScript/Closure/</url>
+    <content><![CDATA[<h4 id="相关知识概要"><a href="#相关知识概要" class="headerlink" title="相关知识概要"></a>相关知识概要</h4><blockquote>
+<p>定义：<br>    + 一个函数和它周围状态的引用捆绑在一起的组合。<br>    + 内部函数可以访问它们所在的外部函数中声明的所有局部变量、参数和声明的其他内部函数。当其中一个这样的内部函数在包含它们的外部函数之外被调用时，就会形成闭包。<br>    + 闭包就是一个没有释放资源的栈区。</p>
+<p>执行上下文：程序执行时，有自己的执行上下文，执行上下文分为两个阶段：</p>
+<ul>
+<li>创建阶段：<ul>
+<li><strong>作用域链</strong>：当前变量对象 + 所有父级变量对象 &#x3D; 作用域链</li>
+<li>变量对象：包括参数、变量、函数声明</li>
+<li>this</li>
+</ul>
+</li>
+<li>执行阶段：变量赋值，函数引用等</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>闭包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js学习 --- this指向问题</title>
+    <url>/2022/05/18/JavaScript/This/</url>
+    <content><![CDATA[<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><ul>
+<li>this -&gt; JavaScript 关键字</li>
+<li>当前环境执行期上下文对象的一个属性</li>
+<li>this在不同的环境、不同作用下，表现不同</li>
+</ul>
+<h4 id="this指向"><a href="#this指向" class="headerlink" title="this指向"></a>this指向</h4><blockquote>
+<p>this 指向（函数在定义的时候this是不确定的，只有在调用的时候才可以确定this的指向）</p>
+<ol>
+<li>普通函数中和定时器，内部的this指向全局window（严格模式下，普通函数this指向undefined）</li>
+<li>函数作为一个对象的方法，该对象被调用，this指向该对象</li>
+<li>构造函数this指向返回的这个对象</li>
+<li>箭头函数，内外this一致，绑定最近的一层对象上</li>
+</ol>
+</blockquote>
+<h4 id="改变this指向"><a href="#改变this指向" class="headerlink" title="改变this指向"></a>改变this指向</h4><blockquote>
+<ol>
+<li>箭头函数</li>
+<li>let 变量 &#x3D; this</li>
+<li>通过call，apply，bind可以改变this的指向，call，apply会立即调用，bind返回一个函数</li>
+<li>new实例化一个对象</li>
+</ol>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>this指向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定义计时器</title>
+    <url>/2022/05/13/JavaScript/TimeCount/</url>
+    <content><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><blockquote>
+<p>用于实现计时功能(可在callback中接收当前值，并执行相应操作或者结束计时)，接收两个参数 params(Object)和callback;</p>
+</blockquote>
+<ol>
+<li>params: 为一个对象<ul>
+<li>startVal: 初始值-默认<code>60</code></li>
+<li>endVal: 结束值-默认<code>0</code></li>
+<li>valSetp: 步长,正数则正计时,负数倒计时-默认<code>-1</code></li>
+<li>timerStep: 周期定时器的时间步长-默认<code>1000</code></li>
+</ul>
+</li>
+<li>callback: 为一个回调函数,接收一个当前值的参数。返回若为<code>true</code>则终止计时。<blockquote>
+<p>注意：callback若有返回值（无论什么值）,则endVal会失效</p>
+</blockquote>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre class="language-none"><code class="language-none">&#x2F;**
+ * 描述: 计时器
+ * @param &#123;Object&#125; params 配置参数
+ * @param &#123;Function&#125; calback 计时器执行时的回调函数
+ *&#x2F;
+const TimeCount &#x3D; (params, callback) &#x3D;&gt; &#123;
+    &#x2F;&#x2F; 设置缺省默认值
+    const defaultVal &#x3D; &#123;
+        startVal: 60,
+        endVal: 0,
+        valStep:-1,
+        timerStep: 1000,
+    &#125;
+    &#x2F;&#x2F; 判断当前传入的params是否是一个对象
+    let isObject &#x3D; Object.prototype.toString.call(params) &#x3D;&#x3D;&#x3D; &#39;[object Object]&#39;
+    if(!isObject)&#123;
+        params &#x3D; Object.assign(&#123;&#125;,defaultVal)
+        console.log(&#39;params type is not Object&#39;)
+    &#125;else &#123;
+        Object.keys(defaultVal).forEach((item) &#x3D;&gt; &#123;
+            if(!params.hasOwnProperty(item))&#123;
+                params[item] &#x3D; defaultVal[item]
+            &#125;
+        &#125;)
+    &#125;
+    &#x2F;&#x2F; 从传入的对象解构出需要的值
+    let &#123; startVal,endVal,valStep, timerStep&#125; &#x3D; params;
+    let currentVal &#x3D; startVal;
+    let timer &#x3D; setInterval(() &#x3D;&gt; &#123;
+        currentVal &#x3D; currentVal + valStep;
+        let callbackReturn &#x3D; callback(currentVal);
+        &#x2F;&#x2F; 判断callback有无返回值和当前的结束值来判断是否结束计时
+        if(callbackReturn!&#x3D;&#x3D;undefined)&#123;
+            callbackReturn &amp;&amp; clearInterval(timer);
+        &#125;else&#123;
+            currentVal&#x3D;&#x3D;&#x3D;endVal &amp;&amp; clearInterval(timer);
+        &#125;
+    &#125;, timerStep)
+&#125;</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>js 计数器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js学习 --- 数组遍历</title>
+    <url>/2021/06/16/JavaScript/arrayTraversal/</url>
+    <content><![CDATA[<h4 id="数组常用遍历方法"><a href="#数组常用遍历方法" class="headerlink" title="数组常用遍历方法"></a>数组常用遍历方法</h4><blockquote>
+<p>引用地址：<a href="https://blog.csdn.net/weixin_42733155/article/details/81145334">https://blog.csdn.net/weixin_42733155/article/details/81145334</a></p>
+</blockquote>
+<hr>
+<h5 id="1-forEach"><a href="#1-forEach" class="headerlink" title="1. forEach"></a><code>1. forEach</code></h5><blockquote>
+<p><code>forEach</code>是最简单、最常用的数组遍历方法，它提供一个回调函数，可用于处理数组的每一个元素，默认没有返回值。回调函数的参数，第一个是处于当前循环的元素，第二个是该元素下标，第三个是数组本身。三个参数均可选。<code>当数组项为原始类型时，forEach不会改变原数组，当数组项为引用类型时，原数组会发生改变.</code></p>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 基本写法</span>
+<span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+arr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index<span class="token punctuation">,</span>Array</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// 执行操作</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 数组项为原始类型</span>
+<span class="token keyword">var</span> arr2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token literal-property property">a</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token punctuation">&#123;</span><span class="token literal-property property">a</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token punctuation">&#123;</span><span class="token literal-property property">a</span><span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 数组项为引用类型</span>
+arr1<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">item</span> <span class="token operator">=></span><span class="token punctuation">&#123;</span>
+    item <span class="token operator">=</span> item <span class="token operator">*</span> item<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+arr2<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">item</span> <span class="token operator">=></span><span class="token punctuation">&#123;</span>
+    item<span class="token punctuation">.</span>a <span class="token operator">=</span> item<span class="token punctuation">.</span>a <span class="token operator">*</span> item<span class="token punctuation">.</span>a<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr1<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1,2,3,4]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [&#123;a:1&#125;,&#123;a:4&#125;,&#123;a:9&#125;],原数组发生改变</span></code></pre>
+
+
+
+<h5 id="2-map"><a href="#2-map" class="headerlink" title="2. map"></a><code>2. map</code></h5><blockquote>
+<p><code>map</code> 提供一个回调函数，不改变当前数组，默认返回一个数组。回调参数为当前循环的元素、该元素下标、数组本身。</p>
+<blockquote>
+<p><code>join()</code>把数组项以特定的字符链接&#x3D;&gt;<code>字符串</code></p>
+</blockquote>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> res <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index<span class="token punctuation">,</span>Array</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> item<span class="token operator">*</span><span class="token punctuation">(</span>index<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// [1,2,3,4,5]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// [1,4,6,16,25]</span></code></pre>
+
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> arr2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token literal-property property">a</span><span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token punctuation">&#123;</span><span class="token literal-property property">a</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token punctuation">&#123;</span><span class="token literal-property property">a</span><span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 数组项为引用类型</span>
+<span class="token keyword">var</span> tem  <span class="token operator">=</span> arr2<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> item<span class="token punctuation">.</span>a
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment">// tem: [1,4,9]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>tem<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1,4,9</span></code></pre>
+
+<h5 id="filter"><a href="#filter" class="headerlink" title="filter"></a><code>filter</code></h5><blockquote>
+<p><code>filter</code>，过滤，即对数组元素的一个条件筛选。它提供一个回调函数，参数依次为处于当前循环的元素、该元素下标、数组本身，三者均可选。默认返回一个数组，原数组的元素执行了回调函数之后返回值若为true，则会将这个元素放入返回的数组中。</p>
+<blockquote>
+<p><code>filter</code>方法不改变原数组，和<code>forEach</code>类似，数组项为引用类型，数组会被改变，原始类型，数组不会被改变</p>
+</blockquote>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> res <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> item<span class="token operator">*</span>index<span class="token operator">>=</span><span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1,2,3,4,5]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [3,4,5]</span></code></pre>
+
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>array</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js学习 --- 解构赋值(未完结)</title>
+    <url>/2022/05/15/JavaScript/deconstruct/</url>
+    <content><![CDATA[<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>ES6允许按照一定的模式从数组或者对象中提取值，然后给变量进行赋值，</p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ul>
+<li>数组的解构赋值</li>
+<li>对象的解构赋值</li>
+<li>字符串的解构赋值</li>
+<li>布尔值的解构赋值</li>
+<li>函数参数的解构赋值</li>
+</ul>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="数组的解构赋值"><a href="#数组的解构赋值" class="headerlink" title="数组的解构赋值"></a>数组的解构赋值</h4><ol>
+<li>解构成功（完全解构和不完全解构）<br>+ 完全解构</li>
+</ol>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>js 解构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js方法 --- 树的遍历</title>
+    <url>/2021/06/20/JavaScript/treeTraversal/</url>
+    <content><![CDATA[<h4 id="树的遍历（深度优先遍历和广度优先遍历–js）"><a href="#树的遍历（深度优先遍历和广度优先遍历–js）" class="headerlink" title="树的遍历（深度优先遍历和广度优先遍历–js）"></a>树的遍历（深度优先遍历和广度优先遍历–js）</h4><blockquote>
+<p>原文地址： <a href="https://www.cnblogs.com/ming1025/p/13677512.html">https://www.cnblogs.com/ming1025/p/13677512.html</a></p>
+</blockquote>
+<h5 id="1-广度优先"><a href="#1-广度优先" class="headerlink" title="1.  广度优先"></a>1.  广度优先</h5><blockquote>
+<p>从上至下，从左至右，（可以理解为按层进行遍历）对树结构进行遍历，广度优先遍历用 <strong>队列</strong>（先进先出）进行存储节点对象</p>
+</blockquote>
+<h5 id="2-深度优先"><a href="#2-深度优先" class="headerlink" title="2. 深度优先"></a>2. 深度优先</h5><blockquote>
+<p>访问完一颗子树再去访问后面的子树，深度优先遍历使用 <strong>栈</strong> （先进后出）结构进行存储树节点对象</p>
+</blockquote>
+<h5 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h5><pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 树结构数据</span>
+<span class="token keyword">let</span> tree <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span> 
+        <span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1-1'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1-1'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1-2'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1-2'</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'2'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点2'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'2-1'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点2-1'</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span></code></pre>
+
+<ol>
+<li><p>广度优先遍历的实现</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 广度优先</span>
+<span class="token keyword">function</span> <span class="token function">treeForeach</span> <span class="token punctuation">(</span><span class="token parameter">tree<span class="token punctuation">,</span> func</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> node<span class="token punctuation">,</span> list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>tree<span class="token punctuation">]</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>node <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">func</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+    node<span class="token punctuation">.</span>children <span class="token operator">&amp;&amp;</span> list<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">...</span>node<span class="token punctuation">.</span>children<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+
+</li>
+<li><p>深度优先遍历的实现</p>
+<pre class="language-none"><code class="language-none">&#x2F;&#x2F; 1.深度优先遍历的递归方法（前序）
+function treeForeach (tree, func) &#123;
+  tree.forEach(data &#x3D;&gt; &#123;
+    func(data)
+    data.children &amp;&amp; treeForeach(data.children, func) &#x2F;&#x2F; 遍历子树
+  &#125;)
+&#125;
+
+&#x2F;&#x2F; 2.深度优先遍历的递归方法（后序）
+function treeForeach (tree, func) &#123;
+  tree.forEach(data &#x3D;&gt; &#123;
+    data.children &amp;&amp; treeForeach(data.children, func) &#x2F;&#x2F; 遍历子树
+    func(data)
+  &#125;)
+&#125;
+
+&#x2F;&#x2F; 3. 深度优先遍历的非递归实现（前序）
+function treeForeach (tree, func) &#123;
+  let node, list &#x3D; [...tree]
+  while (node &#x3D; list.shift()) &#123;
+    func(node)
+    node.children &amp;&amp; list.unshift(...node.children)
+  &#125;
+&#125;
+
+&#x2F;&#x2F; 4. 深度优先遍历的非递归实现（后序）
+function treeForeach (tree, func) &#123;
+  let node, list &#x3D; [...tree], i &#x3D;  0
+  while (node &#x3D; list[i]) &#123;
+    let childCount &#x3D; node.children ? node.children.length : 0
+    if (!childCount || node.children[childCount - 1] &#x3D;&#x3D;&#x3D; list[i - 1]) &#123;
+      func(node)
+      i++
+    &#125; else &#123;
+      list.splice(i, 0, ...node.children)
+    &#125;
+  &#125;
+&#125;
+</code></pre></li>
+</ol>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>树 遍历 JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JsDoc</title>
+    <url>/2022/05/12/Others/JsDoc/</url>
+    <content><![CDATA[<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><blockquote>
+<p><code> jsdoc -d ./ xxx.js</code>  #在当前目录生成构建后的文档<br><code> jsdoc -d  xxx.js</code>  #在当前目录生成一个out文件夹</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JsDoc</category>
+      </categories>
+      <tags>
+        <tag>jsdoc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>创建一个新的git仓库并提交代码，后续代码提交流程</title>
+    <url>/2021/08/13/Others/gitCreate/</url>
+    <content><![CDATA[<h4 id="第一次创建仓库"><a href="#第一次创建仓库" class="headerlink" title="第一次创建仓库"></a>第一次创建仓库</h4><pre class="language-javascript" data-language="javascript"><code class="language-javascript">git init
+git add <span class="token punctuation">.</span>
+git commit <span class="token operator">-</span>m <span class="token string">'first commit'</span>
+git remote add origin git地址
+git push <span class="token operator">-</span>u origin master</code></pre>
+
+<h4 id="正常拉取流程"><a href="#正常拉取流程" class="headerlink" title="正常拉取流程"></a>正常拉取流程</h4><pre class="language-none"><code class="language-none">git add .&#x2F;&#x2F; 添加所有文件
+git commit -m ‘注释’&#x2F;&#x2F; 提交到本地
+git remote add origin git地址
+git pull origin git地址
+git push origin master 推送至远程</code></pre>
+<h4 id="遇到的错误以及解决方法"><a href="#遇到的错误以及解决方法" class="headerlink" title="遇到的错误以及解决方法"></a>遇到的错误以及解决方法</h4><ul>
+<li><code>fatal: refusing to merge unrelated histories</code></li>
+<li>解决方法：<code>git pull origin master --allow-unrelated-histories</code></li>
+</ul>
+<hr>
+<ul>
+<li><code>couldn&#39;t find remote ref –allow-unrelated-histories</code></li>
+<li>解决方法：<code>git pull --rebase origin master</code></li>
+</ul>
+<hr>
+<ul>
+<li><code>src refspec master does not match any</code></li>
+<li>解决方法： 当前仓库为空，添加内容后再提交即可</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>git仓库创建 代码提交</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WebSocket 连接---前端</title>
+    <url>/2021/06/21/Others/webSocket/</url>
+    <content><![CDATA[<h4 id="WebSocket-连接—前端"><a href="#WebSocket-连接—前端" class="headerlink" title="WebSocket 连接—前端"></a>WebSocket 连接—前端</h4><blockquote>
+<p>在线测试： <a href="http://coolaf.com/tool/chattest">http://coolaf.com/tool/chattest</a></p>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// webSocket.js</span>
+<span class="token comment">// websocket 的封装 </span>
+<span class="token keyword">let</span> Socket <span class="token operator">=</span> <span class="token string">''</span>
+<span class="token keyword">let</span> setIntervalWesocketPush <span class="token operator">=</span> <span class="token keyword">null</span>
+
+<span class="token comment">/**
+ * 建立websocket连接
+ * @param &#123;string&#125; url ws地址
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">createSocket</span> <span class="token operator">=</span> <span class="token parameter">url</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  Socket <span class="token operator">&amp;&amp;</span> Socket<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>url<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>Socket<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'建立websocket连接'</span><span class="token punctuation">)</span>
+      Socket <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WebSocket</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+      Socket<span class="token punctuation">.</span>onopen <span class="token operator">=</span> onopenWS
+      Socket<span class="token punctuation">.</span>onmessage <span class="token operator">=</span> onmessageWS
+      Socket<span class="token punctuation">.</span>onerror <span class="token operator">=</span> onerrorWS
+      Socket<span class="token punctuation">.</span>onclose <span class="token operator">=</span> oncloseWS
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'websocket已连接'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/**打开WS之后发送心跳 */</span>
+<span class="token keyword">const</span> <span class="token function-variable function">onopenWS</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token function">sendPing</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/**连接失败重连 */</span>
+<span class="token keyword">const</span> <span class="token function-variable function">onerrorWS</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  Socket<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">clearInterval</span><span class="token punctuation">(</span>setIntervalWesocketPush<span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'连接失败重连中'</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>Socket<span class="token punctuation">.</span>readyState <span class="token operator">!==</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Socket <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token function">createSocket</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/**WS数据接收统一处理 */</span>
+<span class="token keyword">const</span> <span class="token function-variable function">onmessageWS</span> <span class="token operator">=</span> <span class="token parameter">e</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  window<span class="token punctuation">.</span><span class="token function">dispatchEvent</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CustomEvent</span><span class="token punctuation">(</span><span class="token string">'onmessageWS'</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">detail</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token literal-property property">data</span><span class="token operator">:</span> e<span class="token punctuation">.</span>data
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/**
+ * 发送数据但连接未建立时进行处理等待重发
+ * @param &#123;any&#125; message 需要发送的数据
+ */</span>
+<span class="token keyword">const</span> <span class="token function-variable function">connecting</span> <span class="token operator">=</span> <span class="token parameter">message</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Socket<span class="token punctuation">.</span>readyState <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">connecting</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+      Socket<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/**
+ * 发送数据
+ * @param &#123;any&#125; message 需要发送的数据
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">sendWSPush</span> <span class="token operator">=</span> <span class="token parameter">message</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>Socket <span class="token operator">!==</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> Socket<span class="token punctuation">.</span>readyState <span class="token operator">===</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Socket<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">createSocket</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>Socket<span class="token punctuation">.</span>readyState <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Socket<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>Socket<span class="token punctuation">.</span>readyState <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">connecting</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/**断开重连 */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">oncloseWS</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token function">clearInterval</span><span class="token punctuation">(</span>setIntervalWesocketPush<span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'websocket已断开....正在尝试重连'</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>Socket<span class="token punctuation">.</span>readyState <span class="token operator">!==</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Socket <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token function">createSocket</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/**发送心跳
+ * @param &#123;number&#125; time 心跳间隔毫秒 默认5000
+ * @param &#123;string&#125; ping 心跳名称 默认字符串ping
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> sendPing <span class="token operator">=</span> <span class="token punctuation">(</span>time <span class="token operator">=</span> <span class="token number">5000</span><span class="token punctuation">,</span> ping <span class="token operator">=</span> <span class="token string">'ping'</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token function">clearInterval</span><span class="token punctuation">(</span>setIntervalWesocketPush<span class="token punctuation">)</span>
+  Socket<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>ping<span class="token punctuation">)</span>
+  setIntervalWesocketPush <span class="token operator">=</span> <span class="token function">setInterval</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    Socket<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>ping<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> time<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 断开连接</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">SocketClose</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  Socket<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+</code></pre>
+
+<pre class="language-vue" data-language="vue"><code class="language-vue">&#x2F;&#x2F; 使用方法
+&lt;script&gt;
+ 	&#x2F;&#x2F; 引入 webSocket.js 文件
+    import &#123; createSocket, SocketClose &#125; from &quot;..&#x2F;..&#x2F;..&#x2F;..&#x2F;utils&#x2F;webSocket&quot;;
+    export default &#123;
+      name: &quot;test&quot;,
+      data() &#123;
+        return &#123;
+          path: &quot;ws:&#x2F;&#x2F;82.157.123.54:9010&#x2F;ajaxchattest&quot;,&#x2F;&#x2F; ws 地址
+        &#125;;
+      &#125;,
+      mounted() &#123;
+        &#x2F;&#x2F; 实例化
+        createSocket(this.path);
+        &#x2F;&#x2F; 添加监听，监听onmessage，用来获取ws返回的数据
+        this.addEveLis();
+      &#125;,
+      destroyed() &#123;
+        &#x2F;&#x2F; 页面销毁时，移除监听
+        window.removeEventListener(&quot;onmessageWS&quot;, this.handleData);
+        &#x2F;&#x2F; 关闭websocket连接
+        SocketClose();
+      &#125;,
+      methods: &#123;
+        &#x2F;&#x2F; 添加监听事件
+        addEveLis() &#123;
+          window.addEventListener(&quot;onmessageWS&quot;, this.handleData);
+        &#125;,
+
+        &#x2F;&#x2F; 处理接收的数据
+        handleData(info) &#123;
+          console.log(info.detail);
+        &#125;,
+      &#125;,
+    &#125;;
+&lt;&#x2F;script&gt;
+	</code></pre>
+
+]]></content>
+      <categories>
+        <category>WebSocket</category>
+      </categories>
+      <tags>
+        <tag>websocket</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>webpack打包后图片找不到-404</title>
+    <url>/2021/06/20/Others/webpack/</url>
+    <content><![CDATA[<h4 id="webpack-打包后-图片找不到-–404"><a href="#webpack-打包后-图片找不到-–404" class="headerlink" title="webpack 打包后 图片找不到 –404"></a>webpack 打包后 图片找不到 –404</h4><blockquote>
+<p>一. build文件夹下 utils文件中</p>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token parameter">options<span class="token punctuation">.</span>extract</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> ExtractTextPlugin<span class="token punctuation">.</span><span class="token function">extract</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">use</span><span class="token operator">:</span> loaders<span class="token punctuation">,</span>
+        <span class="token literal-property property">fallback</span><span class="token operator">:</span> <span class="token string">'vue-style-loader'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">publicPath</span><span class="token operator">:</span><span class="token string">'../../'</span> <span class="token comment">//此处为新添加的项</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token string">'vue-style-loader'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>loaders<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<blockquote>
+<p>二. config 文件夹下 index.js 文件</p>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token literal-property property">assetsPublicPath</span><span class="token operator">:</span> <span class="token string">'./'</span> <span class="token comment">//此处修改</span></code></pre>
+
+<blockquote>
+<p>三. 图片路径不要写成绝对路径</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>WebPack</category>
+      </categories>
+      <tags>
+        <tag>webpack 打包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue学习 --- render函数</title>
+    <url>/2022/05/14/Vue/Render/</url>
+    <content><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><ol>
+<li><p><code>render</code>函数和<code>template</code>的作用一样，用于渲染页面。接收一个参数<code>createElement</code>。</p>
+</li>
+<li><p><code>createElement</code>参数同样也是一个函数，他接收三个参数，返回一个<code>VNode</code>节点。</p>
+<ul>
+<li><p>一个 HTML 标签字符串，组件选项对象，或者解析上述任何一种的一个 <code>async</code> 异步函数。类型：<code>String | Object | Function</code>。必需。</p>
+</li>
+<li><p>一个包含模板相关属性的数据对象，你可以在 <code>template </code>中使用这些特性。类型：<code>Object</code>。可选。</p>
+</li>
+<li><p>子虚拟节点 <code>VNodes</code>，由 <code>createElement() </code>构建而成，也可以使用字符串来生成“文本虚拟节点”。类型：<code>String | Array</code>。可选。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="简单用法"><a href="#简单用法" class="headerlink" title="简单用法"></a>简单用法</h4><ol>
+<li><p><a href="https://cn.vuejs.org/v2/guide/render-function.html">官网</a>示例：</p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&#x2F;&#x2F; 父组件中
+&lt;div&gt;
+    &lt;RenderVue level&#x3D;&quot;1&quot;&gt;标题1&lt;&#x2F;RenderVue&gt;
+    &lt;RenderVue level&#x3D;&quot;2&quot;&gt;标题2&lt;&#x2F;RenderVue&gt;
+    &lt;RenderVue level&#x3D;&quot;3&quot;&gt;标题3&lt;&#x2F;RenderVue&gt;
+    &lt;RenderVue level&#x3D;&quot;4&quot;&gt;标题4&lt;&#x2F;RenderVue&gt;
+&lt;&#x2F;div&gt;
+
+&#x2F;&#x2F; 子组件中
+&lt;script&gt;
+export default &#123;
+  props: &#123;
+    level: &#123;
+      type: String,
+    &#125;
+  &#125;,
+  render(createElement) &#123;
+    return createElement(&#39;h&#39; + this.level,this.$slots.default)
+  &#125;
+&#125;
+&lt;&#x2F;script&gt;</code></pre></li>
+</ol>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
+<li><code>Vue</code>文件中<code>Template</code>最终会被编译成<code>render</code>函数的形式</li>
+<li><code>Vue</code>文件中若写了<code>&lt;template&gt;&lt;/template&gt;</code> <code>render</code>函数会变的无效</li>
+</ul>
+<h4 id="引用地址"><a href="#引用地址" class="headerlink" title="引用地址"></a>引用地址</h4><blockquote>
+<ul>
+<li><a href="https://blog.csdn.net/weixin_43974265/article/details/112747768">https://blog.csdn.net/weixin_43974265/article/details/112747768</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>render vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue学习 --- 插槽</title>
+    <url>/2022/05/13/Vue/Slot/</url>
+    <content><![CDATA[<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ul>
+<li><p>具名插槽</p>
+<blockquote>
+<p>可以通过name属性给插槽绑定名称，从而达到预期想要渲染的位置</p>
+</blockquote>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;solt name&#x3D;&#39;header&#39;&gt;
+ 	&#x2F;&#x2F; 此处可以写一些默认内容（后备内容）
+&lt;&#x2F;slot&gt;</code></pre>
+
+<p>使用时可以通过<code>v-solt:header</code>或者<code>#header</code>，<code>#</code>和<code>v-solt:</code>功能类似</p>
+<blockquote>
+<p> 注意：<code>#</code>后必须有名字</p>
+</blockquote>
+<ul>
+<li><p>不设置名称则默认插槽名称为<code>default</code>（默认的具名插槽）</p>
+<pre class="language-vue" data-language="vue"><code class="language-vue">① &lt;solt name&#x3D;&#39;default&#39;&gt;&lt;&#x2F;solt&gt;
+② &lt;solt&gt;&lt;&#x2F;solt&gt;
+①和②是一样的作用</code></pre>
+</li>
+<li><p>自定义设置插槽名称（自定义名称的插槽）</p>
+</li>
+</ul>
+</li>
+<li><p>作用域插槽</p>
+<blockquote>
+<p>提供一种方式，使得插槽能够访问子组件中数据的插槽。通过在子组件中绑定值以供插槽中使用</p>
+</blockquote>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&#x2F;&#x2F; 子组件中：
+&lt;solt :propName&#x3D;&quot;user&quot;&gt;&lt;&#x2F;solt&gt;
+let user &#x3D; &#123;
+	name: &#39;yanghong&#39;,
+	age: 18
+&#125;
+&#x2F;&#x2F; 调用：
+&lt;template #default&#x3D;&quot;&#123;propName&#125;&quot;&gt;
+	&lt;span&gt;&#123;&#123;&#125;&#125;&lt;&#x2F;span&gt;
+&lt;&#x2F;template&gt;</code></pre></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>vue slot</tag>
+      </tags>
+  </entry>
+</search>

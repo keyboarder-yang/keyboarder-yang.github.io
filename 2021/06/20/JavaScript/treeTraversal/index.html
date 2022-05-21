@@ -4,12 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="树的遍历（深度优先遍历和广度优先遍历--js）, html,javascript,css">
-    <meta name="description" content="树的遍历（深度优先遍历和广度优先遍历–js）
-原文地址： https://www.cnblogs.com/ming1025/p/13677512.html
-
-1.  广度优先
-从上至下，从左至右，（可以理解为按层进行遍历）对树结构进行遍历，">
+    <meta name="keywords" content="js方法 --- 树的遍历, html,javascript,css">
+    <meta name="description" content="对于树结构遍历方法的总结">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -23,7 +19,7 @@
 
     
 
-    <title>树的遍历（深度优先遍历和广度优先遍历--js） | 前端学习笔记</title>
+    <title>js方法 --- 树的遍历 | 前端学习笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -36,7 +32,8 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -228,12 +225,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">树的遍历（深度优先遍历和广度优先遍历--js）</h1>
+                    <h1 class="description center-align post-title">js方法 --- 树的遍历</h1>
                 </div>
             </div>
         </div>
@@ -381,7 +378,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-18
+                    2022-05-21
                 </div>
                 
 
@@ -405,6 +402,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -419,16 +419,78 @@
 <h5 id="2-深度优先"><a href="#2-深度优先" class="headerlink" title="2. 深度优先"></a>2. 深度优先</h5><blockquote>
 <p>访问完一颗子树再去访问后面的子树，深度优先遍历使用 <strong>栈</strong> （先进后出）结构进行存储树节点对象</p>
 </blockquote>
-<h5 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 树结构数据</span></span><br><span class="line"><span class="keyword">let</span> tree = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;节点1&#x27;</span>,</span><br><span class="line">    <span class="attr">children</span>: [ </span><br><span class="line">        &#123; <span class="attr">id</span>: <span class="string">&#x27;1-1&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;节点1-1&#x27;</span> &#125;,</span><br><span class="line">		&#123; <span class="attr">id</span>: <span class="string">&#x27;1-2&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;节点1-2&#x27;</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;节点2&#x27;</span>,</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">      &#123; <span class="attr">id</span>: <span class="string">&#x27;2-1&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;节点2-1&#x27;</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h5 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h5><pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 树结构数据</span>
+<span class="token keyword">let</span> tree <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span> 
+        <span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1-1'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1-1'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1-2'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1-2'</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'2'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点2'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'2-1'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点2-1'</span> <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span></code></pre>
 
 <ol>
 <li><p>广度优先遍历的实现</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 广度优先</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">treeForeach</span> (tree, func) &#123;</span><br><span class="line">  <span class="keyword">let</span> node, list = [...tree]</span><br><span class="line">  <span class="keyword">while</span> (node = list.<span class="title function_">shift</span>()) &#123;</span><br><span class="line">    <span class="title function_">func</span>(node)</span><br><span class="line">    node.<span class="property">children</span> &amp;&amp; list.<span class="title function_">push</span>(...node.<span class="property">children</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 广度优先</span>
+<span class="token keyword">function</span> <span class="token function">treeForeach</span> <span class="token punctuation">(</span><span class="token parameter">tree<span class="token punctuation">,</span> func</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> node<span class="token punctuation">,</span> list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>tree<span class="token punctuation">]</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>node <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">func</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+    node<span class="token punctuation">.</span>children <span class="token operator">&amp;&amp;</span> list<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">...</span>node<span class="token punctuation">.</span>children<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 
 </li>
 <li><p>深度优先遍历的实现</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">// 1.深度优先遍历的递归方法（前序）</span><br><span class="line">function treeForeach (tree, func) &#123;</span><br><span class="line">  tree.forEach(data =&gt; &#123;</span><br><span class="line">    func(data)</span><br><span class="line">    data.children &amp;&amp; treeForeach(data.children, func) // 遍历子树</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 2.深度优先遍历的递归方法（后序）</span><br><span class="line">function treeForeach (tree, func) &#123;</span><br><span class="line">  tree.forEach(data =&gt; &#123;</span><br><span class="line">    data.children &amp;&amp; treeForeach(data.children, func) // 遍历子树</span><br><span class="line">    func(data)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 3. 深度优先遍历的非递归实现（前序）</span><br><span class="line">function treeForeach (tree, func) &#123;</span><br><span class="line">  let node, list = [...tree]</span><br><span class="line">  while (node = list.shift()) &#123;</span><br><span class="line">    func(node)</span><br><span class="line">    node.children &amp;&amp; list.unshift(...node.children)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 4. 深度优先遍历的非递归实现（后序）</span><br><span class="line">function treeForeach (tree, func) &#123;</span><br><span class="line">  let node, list = [...tree], i =  0</span><br><span class="line">  while (node = list[i]) &#123;</span><br><span class="line">    let childCount = node.children ? node.children.length : 0</span><br><span class="line">    if (!childCount || node.children[childCount - 1] === list[i - 1]) &#123;</span><br><span class="line">      func(node)</span><br><span class="line">      i++</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      list.splice(i, 0, ...node.children)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<pre class="language-none"><code class="language-none">&#x2F;&#x2F; 1.深度优先遍历的递归方法（前序）
+function treeForeach (tree, func) &#123;
+  tree.forEach(data &#x3D;&gt; &#123;
+    func(data)
+    data.children &amp;&amp; treeForeach(data.children, func) &#x2F;&#x2F; 遍历子树
+  &#125;)
+&#125;
+
+&#x2F;&#x2F; 2.深度优先遍历的递归方法（后序）
+function treeForeach (tree, func) &#123;
+  tree.forEach(data &#x3D;&gt; &#123;
+    data.children &amp;&amp; treeForeach(data.children, func) &#x2F;&#x2F; 遍历子树
+    func(data)
+  &#125;)
+&#125;
+
+&#x2F;&#x2F; 3. 深度优先遍历的非递归实现（前序）
+function treeForeach (tree, func) &#123;
+  let node, list &#x3D; [...tree]
+  while (node &#x3D; list.shift()) &#123;
+    func(node)
+    node.children &amp;&amp; list.unshift(...node.children)
+  &#125;
+&#125;
+
+&#x2F;&#x2F; 4. 深度优先遍历的非递归实现（后序）
+function treeForeach (tree, func) &#123;
+  let node, list &#x3D; [...tree], i &#x3D;  0
+  while (node &#x3D; list[i]) &#123;
+    let childCount &#x3D; node.children ? node.children.length : 0
+    if (!childCount || node.children[childCount - 1] &#x3D;&#x3D;&#x3D; list[i - 1]) &#123;
+      func(node)
+      i++
+    &#125; else &#123;
+      list.splice(i, 0, ...node.children)
+    &#125;
+  &#125;
+&#125;
+</code></pre></li>
 </ol>
 
                 
@@ -556,7 +618,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于websocket的一些简单理解
                         
                     </div>
                     <div class="publish-info">
@@ -605,7 +667,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于webpack使用问题总结
                         
                     </div>
                     <div class="publish-info">
@@ -787,7 +849,7 @@
         <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
                    server="netease"
                    type="playlist"
-                   id="1430583016"
+                   id="778901506"
                    fixed='true'
                    autoplay='true'
                    theme='#42b983'
@@ -819,7 +881,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.3k</span>
+                        class="white-color">5k</span>
             
             
             

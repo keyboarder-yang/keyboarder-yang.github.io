@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="hexo相关, html,javascript,css">
-    <meta name="description" content="常用命令12345678hexo new TitleName #新建文章TitleNamehexo new page PageName #新建页面PageName---会创建在source目录下hexo new page --path a/">
+    <meta name="keywords" content="hexo学习, html,javascript,css">
+    <meta name="description" content="对于hexo使用方法总结">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>hexo相关 | 前端学习笔记</title>
+    <title>hexo学习 | 前端学习笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -32,7 +32,8 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -224,12 +225,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">hexo相关</h1>
+                    <h1 class="description center-align post-title">hexo学习</h1>
                 </div>
             </div>
         </div>
@@ -377,14 +378,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-18
+                    2022-05-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    159
+                    170
                 </div>
                 
 
@@ -401,12 +402,22 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hexo new TitleName #新建文章TitleName</span><br><span class="line">hexo new page PageName #新建页面PageName---会创建在source目录下</span><br><span class="line">hexo new page --path a/b #在source/_post下新建目录a,a中新建文章b</span><br><span class="line">hexo generate/hexo g #生成静态页面至public目录</span><br><span class="line">hexo server/hexo s #开启预览访问端口</span><br><span class="line">hexo deploy/hexo d #部署到GitHub</span><br><span class="line">hexo d -g #生成并部署到GitHub</span><br><span class="line">hexo s -g #生产并开启本地服务</span><br></pre></td></tr></table></figure>
+                <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><pre class="language-none"><code class="language-none">hexo new TitleName #新建文章TitleName
+hexo new page PageName #新建页面PageName---会创建在source目录下
+hexo new page --path a&#x2F;b #在source&#x2F;_post下新建目录a,a中新建文章b
+hexo generate&#x2F;hexo g #生成静态页面至public目录
+hexo server&#x2F;hexo s #开启预览访问端口
+hexo deploy&#x2F;hexo d #部署到GitHub
+hexo d -g #生成并部署到GitHub
+hexo s -g #生产并开启本地服务</code></pre>
 
 <h3 id="上传到github报错"><a href="#上传到github报错" class="headerlink" title="上传到github报错"></a>上传到github报错</h3><blockquote>
 <p>fatal: unable to access ‘<a target="_blank" rel="noopener" href="https://github.com/.......%E2%80%98">https://github.com/.......‘</a>: OpenSSL SSL_read: Connection was reset<br>原因：服务器的SSL证书没有经过第三方机构的签署，所以才报错<br>解决方法：<code>git config --global http.sslVerify &quot;false&quot;</code> 解除验证</p>
@@ -537,7 +548,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于JsDoc的使用总结
                         
                     </div>
                     <div class="publish-info">
@@ -586,7 +597,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于Git仓库使用的总结
                         
                     </div>
                     <div class="publish-info">
@@ -768,7 +779,7 @@
         <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
                    server="netease"
                    type="playlist"
-                   id="1430583016"
+                   id="778901506"
                    fixed='true'
                    autoplay='true'
                    theme='#42b983'
@@ -800,7 +811,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.3k</span>
+                        class="white-color">5k</span>
             
             
             

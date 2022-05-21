@@ -5,14 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="vue学习 --- 插槽, html,javascript,css">
-    <meta name="description" content="分类
-具名插槽
-
-可以通过name属性给插槽绑定名称，从而达到预期想要渲染的位置
-
-123&amp;lt;solt name=&amp;#x27;header&amp;#x27;&amp;gt; 	// 此处可以写一些默认内容（后备内容）&amp;lt;/slot&amp;gt;
-
-使用">
+    <meta name="description" content="对于插槽slot的一些简单理解">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -39,7 +32,8 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -384,14 +378,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-18
+                    2022-05-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    243
+                    257
                 </div>
                 
 
@@ -408,6 +402,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -418,7 +415,9 @@
 <blockquote>
 <p>可以通过name属性给插槽绑定名称，从而达到预期想要渲染的位置</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;solt name=&#x27;header&#x27;&gt;</span><br><span class="line"> 	// 此处可以写一些默认内容（后备内容）</span><br><span class="line">&lt;/slot&gt;</span><br></pre></td></tr></table></figure>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&lt;solt name&#x3D;&#39;header&#39;&gt;
+ 	&#x2F;&#x2F; 此处可以写一些默认内容（后备内容）
+&lt;&#x2F;slot&gt;</code></pre>
 
 <p>使用时可以通过<code>v-solt:header</code>或者<code>#header</code>，<code>#</code>和<code>v-solt:</code>功能类似</p>
 <blockquote>
@@ -426,7 +425,9 @@
 </blockquote>
 <ul>
 <li><p>不设置名称则默认插槽名称为<code>default</code>（默认的具名插槽）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">① &lt;solt name=&#x27;default&#x27;&gt;&lt;/solt&gt;</span><br><span class="line">② &lt;solt&gt;&lt;/solt&gt;</span><br><span class="line">①和②是一样的作用</span><br></pre></td></tr></table></figure>
+<pre class="language-vue" data-language="vue"><code class="language-vue">① &lt;solt name&#x3D;&#39;default&#39;&gt;&lt;&#x2F;solt&gt;
+② &lt;solt&gt;&lt;&#x2F;solt&gt;
+①和②是一样的作用</code></pre>
 </li>
 <li><p>自定义设置插槽名称（自定义名称的插槽）</p>
 </li>
@@ -436,7 +437,16 @@
 <blockquote>
 <p>提供一种方式，使得插槽能够访问子组件中数据的插槽。通过在子组件中绑定值以供插槽中使用</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 子组件中：</span><br><span class="line">&lt;solt :propName=&quot;user&quot;&gt;&lt;/solt&gt;</span><br><span class="line">let user = &#123;</span><br><span class="line">	name: &#x27;yanghong&#x27;,</span><br><span class="line">	age: 18</span><br><span class="line">&#125;</span><br><span class="line">// 调用：</span><br><span class="line">&lt;template #default=&quot;&#123;propName&#125;&quot;&gt;</span><br><span class="line">	&lt;span&gt;&#123;&#123;&#125;&#125;&lt;/span&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></li>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&#x2F;&#x2F; 子组件中：
+&lt;solt :propName&#x3D;&quot;user&quot;&gt;&lt;&#x2F;solt&gt;
+let user &#x3D; &#123;
+	name: &#39;yanghong&#39;,
+	age: 18
+&#125;
+&#x2F;&#x2F; 调用：
+&lt;template #default&#x3D;&quot;&#123;propName&#125;&quot;&gt;
+	&lt;span&gt;&#123;&#123;&#125;&#125;&lt;&#x2F;span&gt;
+&lt;&#x2F;template&gt;</code></pre></li>
 </ul>
 
                 
@@ -564,7 +574,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于VUE渲染函数的一些简单理解
                         
                     </div>
                     <div class="publish-info">
@@ -605,15 +615,15 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="自定义计时器-周期定时器（可自定初始值,结束条件,步长等）">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="自定义计时器">
                         
-                        <span class="card-title">自定义计时器-周期定时器（可自定初始值,结束条件,步长等）</span>
+                        <span class="card-title">自定义计时器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            自定义定时器，返回计时结果
                         
                     </div>
                     <div class="publish-info">
@@ -795,7 +805,7 @@
         <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
                    server="netease"
                    type="playlist"
-                   id="1430583016"
+                   id="778901506"
                    fixed='true'
                    autoplay='true'
                    theme='#42b983'
@@ -827,7 +837,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.3k</span>
+                        class="white-color">5k</span>
             
             
             

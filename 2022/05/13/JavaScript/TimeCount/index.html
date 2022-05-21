@@ -4,14 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="自定义计时器-周期定时器（可自定初始值,结束条件,步长等）, html,javascript,css">
-    <meta name="description" content="说明
-用于实现计时功能(可在callback中接收当前值，并执行相应操作或者结束计时)，接收两个参数 params(Object)和callback;
-
-
-params: 为一个对象
-startVal: 初始值-默认60
-endVal: 结">
+    <meta name="keywords" content="自定义计时器, html,javascript,css">
+    <meta name="description" content="自定义定时器，返回计时结果">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -25,7 +19,7 @@ endVal: 结">
 
     
 
-    <title>自定义计时器-周期定时器（可自定初始值,结束条件,步长等） | 前端学习笔记</title>
+    <title>自定义计时器 | 前端学习笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -38,7 +32,8 @@ endVal: 结">
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -230,12 +225,12 @@ endVal: 结">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">自定义计时器-周期定时器（可自定初始值,结束条件,步长等）</h1>
+                    <h1 class="description center-align post-title">自定义计时器</h1>
                 </div>
             </div>
         </div>
@@ -383,14 +378,14 @@ endVal: 结">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-18
+                    2022-05-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    347
+                    377
                 </div>
                 
 
@@ -406,6 +401,9 @@ endVal: 结">
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -426,7 +424,45 @@ endVal: 结">
 <li>callback: 为一个回调函数,接收一个当前值的参数。返回若为<code>true</code>则终止计时。<blockquote>
 <p>注意：callback若有返回值（无论什么值）,则endVal会失效</p>
 </blockquote>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 描述: 计时器</span><br><span class="line"> * @param &#123;Object&#125; params 配置参数</span><br><span class="line"> * @param &#123;Function&#125; calback 计时器执行时的回调函数</span><br><span class="line"> */</span><br><span class="line">const TimeCount = (params, callback) =&gt; &#123;</span><br><span class="line">    // 设置缺省默认值</span><br><span class="line">    const defaultVal = &#123;</span><br><span class="line">        startVal: 60,</span><br><span class="line">        endVal: 0,</span><br><span class="line">        valStep:-1,</span><br><span class="line">        timerStep: 1000,</span><br><span class="line">    &#125;</span><br><span class="line">    // 判断当前传入的params是否是一个对象</span><br><span class="line">    let isObject = Object.prototype.toString.call(params) === &#x27;[object Object]&#x27;</span><br><span class="line">    if(!isObject)&#123;</span><br><span class="line">        params = Object.assign(&#123;&#125;,defaultVal)</span><br><span class="line">        console.log(&#x27;params type is not Object&#x27;)</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        Object.keys(defaultVal).forEach((item) =&gt; &#123;</span><br><span class="line">            if(!params.hasOwnProperty(item))&#123;</span><br><span class="line">                params[item] = defaultVal[item]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    // 从传入的对象解构出需要的值</span><br><span class="line">    let &#123; startVal,endVal,valStep, timerStep&#125; = params;</span><br><span class="line">    let currentVal = startVal;</span><br><span class="line">    let timer = setInterval(() =&gt; &#123;</span><br><span class="line">        currentVal = currentVal + valStep;</span><br><span class="line">        let callbackReturn = callback(currentVal);</span><br><span class="line">        // 判断callback有无返回值和当前的结束值来判断是否结束计时</span><br><span class="line">        if(callbackReturn!==undefined)&#123;</span><br><span class="line">            callbackReturn &amp;&amp; clearInterval(timer);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            currentVal===endVal &amp;&amp; clearInterval(timer);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, timerStep)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><pre class="language-none"><code class="language-none">&#x2F;**
+ * 描述: 计时器
+ * @param &#123;Object&#125; params 配置参数
+ * @param &#123;Function&#125; calback 计时器执行时的回调函数
+ *&#x2F;
+const TimeCount &#x3D; (params, callback) &#x3D;&gt; &#123;
+    &#x2F;&#x2F; 设置缺省默认值
+    const defaultVal &#x3D; &#123;
+        startVal: 60,
+        endVal: 0,
+        valStep:-1,
+        timerStep: 1000,
+    &#125;
+    &#x2F;&#x2F; 判断当前传入的params是否是一个对象
+    let isObject &#x3D; Object.prototype.toString.call(params) &#x3D;&#x3D;&#x3D; &#39;[object Object]&#39;
+    if(!isObject)&#123;
+        params &#x3D; Object.assign(&#123;&#125;,defaultVal)
+        console.log(&#39;params type is not Object&#39;)
+    &#125;else &#123;
+        Object.keys(defaultVal).forEach((item) &#x3D;&gt; &#123;
+            if(!params.hasOwnProperty(item))&#123;
+                params[item] &#x3D; defaultVal[item]
+            &#125;
+        &#125;)
+    &#125;
+    &#x2F;&#x2F; 从传入的对象解构出需要的值
+    let &#123; startVal,endVal,valStep, timerStep&#125; &#x3D; params;
+    let currentVal &#x3D; startVal;
+    let timer &#x3D; setInterval(() &#x3D;&gt; &#123;
+        currentVal &#x3D; currentVal + valStep;
+        let callbackReturn &#x3D; callback(currentVal);
+        &#x2F;&#x2F; 判断callback有无返回值和当前的结束值来判断是否结束计时
+        if(callbackReturn!&#x3D;&#x3D;undefined)&#123;
+            callbackReturn &amp;&amp; clearInterval(timer);
+        &#125;else&#123;
+            currentVal&#x3D;&#x3D;&#x3D;endVal &amp;&amp; clearInterval(timer);
+        &#125;
+    &#125;, timerStep)
+&#125;</code></pre></li>
 </ol>
 
                 
@@ -554,7 +590,7 @@ endVal: 结">
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于插槽slot的一些简单理解
                         
                     </div>
                     <div class="publish-info">
@@ -603,7 +639,7 @@ endVal: 结">
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于JsDoc的使用总结
                         
                     </div>
                     <div class="publish-info">
@@ -785,7 +821,7 @@ endVal: 结">
         <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
                    server="netease"
                    type="playlist"
-                   id="1430583016"
+                   id="778901506"
                    fixed='true'
                    autoplay='true'
                    theme='#42b983'
@@ -817,7 +853,7 @@ endVal: 结">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.3k</span>
+                        class="white-color">5k</span>
             
             
             

@@ -5,12 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="vue学习 --- render函数, html,javascript,css">
-    <meta name="description" content="简介
-render函数和template的作用一样，用于渲染页面。接收一个参数createElement。
-
-createElement参数同样也是一个函数，他接收三个参数，返回一个VNode节点。
-
-一个 HTML 标签字符串，组件选项对">
+    <meta name="description" content="对于VUE渲染函数的一些简单理解">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -37,7 +32,8 @@ createElement参数同样也是一个函数，他接收三个参数，返回一�
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+<meta name="generator" content="Hexo 6.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -382,14 +378,14 @@ createElement参数同样也是一个函数，他接收三个参数，返回一�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-18
+                    2022-05-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    313
+                    326
                 </div>
                 
 
@@ -405,6 +401,9 @@ createElement参数同样也是一个函数，他接收三个参数，返回一�
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -427,7 +426,27 @@ createElement参数同样也是一个函数，他接收三个参数，返回一�
 </ol>
 <h4 id="简单用法"><a href="#简单用法" class="headerlink" title="简单用法"></a>简单用法</h4><ol>
 <li><p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/render-function.html">官网</a>示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 父组件中</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;RenderVue level=&quot;1&quot;&gt;标题1&lt;/RenderVue&gt;</span><br><span class="line">    &lt;RenderVue level=&quot;2&quot;&gt;标题2&lt;/RenderVue&gt;</span><br><span class="line">    &lt;RenderVue level=&quot;3&quot;&gt;标题3&lt;/RenderVue&gt;</span><br><span class="line">    &lt;RenderVue level=&quot;4&quot;&gt;标题4&lt;/RenderVue&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">// 子组件中</span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    level: &#123;</span><br><span class="line">      type: String,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  render(createElement) &#123;</span><br><span class="line">    return createElement(&#x27;h&#x27; + this.level,this.$slots.default)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+<pre class="language-vue" data-language="vue"><code class="language-vue">&#x2F;&#x2F; 父组件中
+&lt;div&gt;
+    &lt;RenderVue level&#x3D;&quot;1&quot;&gt;标题1&lt;&#x2F;RenderVue&gt;
+    &lt;RenderVue level&#x3D;&quot;2&quot;&gt;标题2&lt;&#x2F;RenderVue&gt;
+    &lt;RenderVue level&#x3D;&quot;3&quot;&gt;标题3&lt;&#x2F;RenderVue&gt;
+    &lt;RenderVue level&#x3D;&quot;4&quot;&gt;标题4&lt;&#x2F;RenderVue&gt;
+&lt;&#x2F;div&gt;
+
+&#x2F;&#x2F; 子组件中
+&lt;script&gt;
+export default &#123;
+  props: &#123;
+    level: &#123;
+      type: String,
+    &#125;
+  &#125;,
+  render(createElement) &#123;
+    return createElement(&#39;h&#39; + this.level,this.$slots.default)
+  &#125;
+&#125;
+&lt;&#x2F;script&gt;</code></pre></li>
 </ol>
 <h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
 <li><code>Vue</code>文件中<code>Template</code>最终会被编译成<code>render</code>函数的形式</li>
@@ -556,15 +575,15 @@ createElement参数同样也是一个函数，他接收三个参数，返回一�
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="js学习 --- 解构赋值(持续更新)">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="js学习 --- 解构赋值(未完结)">
                         
-                        <span class="card-title">js学习 --- 解构赋值(持续更新)</span>
+                        <span class="card-title">js学习 --- 解构赋值(未完结)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于ES6解构的一些简单理解
                         
                     </div>
                     <div class="publish-info">
@@ -613,7 +632,7 @@ createElement参数同样也是一个函数，他接收三个参数，返回一�
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            对于插槽slot的一些简单理解
                         
                     </div>
                     <div class="publish-info">
@@ -795,7 +814,7 @@ createElement参数同样也是一个函数，他接收三个参数，返回一�
         <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
                    server="netease"
                    type="playlist"
-                   id="1430583016"
+                   id="778901506"
                    fixed='true'
                    autoplay='true'
                    theme='#42b983'
@@ -827,7 +846,7 @@ createElement参数同样也是一个函数，他接收三个参数，返回一�
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.3k</span>
+                        class="white-color">5k</span>
             
             
             
