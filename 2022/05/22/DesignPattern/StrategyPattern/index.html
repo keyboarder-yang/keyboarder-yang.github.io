@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="js学习 --- class, html,javascript,css">
-    <meta name="description" content="对于Class的一些简单理解">
+    <meta name="keywords" content="设计模式学习 --- 策略模式, html,javascript,css">
+    <meta name="description" content="对于策略模式的一些简单理解">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>js学习 --- class | 前端学习笔记</title>
+    <title>设计模式学习 --- 策略模式 | 前端学习笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -225,12 +225,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">js学习 --- class</h1>
+                    <h1 class="description center-align post-title">设计模式学习 --- 策略模式</h1>
                 </div>
             </div>
         </div>
@@ -346,8 +346,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%B1%BB-class/">
-                                <span class="chip bg-color">类 class</span>
+                            <a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+                                <span class="chip bg-color">策略模式</span>
                             </a>
                         
                     </div>
@@ -358,8 +358,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/JavaScript/" class="post-category">
-                                JavaScript
+                            <a href="/categories/DesignPattern/" class="post-category">
+                                DesignPattern
                             </a>
                         
                     </div>
@@ -371,21 +371,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-05-18
+                    2022-05-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-05-21
+                    2022-05-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    27
+                    239
                 </div>
                 
 
@@ -410,8 +410,45 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h4><blockquote>
-<p>类中constructor内，this指向 new出来的实例。而类中的this指向该构造类。</p>
+                <h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><blockquote>
+<p>定义一系列的算法，  把他们一个一个的封装起来，并使得他们可以进行相互替换。</p>
+<p>一个基于策略模式的程序至少由两部分组成。</p>
+<ul>
+<li>第一个部分是：一组策略类，策略类封装了具体的算法，并负责具体的计算过程。</li>
+<li>第二个部分是：环境类，接受客户的请求，随后把请求委托给某一个策略类。</li>
+</ul>
+</blockquote>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 传统写法</span>
+<span class="token keyword">function</span> <span class="token function">calculate</span><span class="token punctuation">(</span><span class="token parameter">level<span class="token punctuation">,</span> salary</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>level <span class="token operator">===</span> <span class="token string">'S'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> salary <span class="token operator">*</span> <span class="token number">4</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>level <span class="token operator">===</span> <span class="token string">'A'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> salary <span class="token operator">*</span> <span class="token number">3</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>level <span class="token operator">===</span> <span class="token string">'B'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> salary <span class="token operator">*</span> <span class="token number">2</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>level <span class="token operator">===</span> <span class="token string">'C'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> salary <span class="token operator">*</span> <span class="token number">1</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 策略类写法</span>
+<span class="token comment">// 策略类算法封装</span>
+<span class="token keyword">const</span> strategies <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token function-variable function">S</span><span class="token operator">:</span> <span class="token parameter">salary</span> <span class="token operator">=></span> <span class="token number">4</span> <span class="token operator">*</span> salary<span class="token punctuation">,</span>
+    <span class="token function-variable function">A</span><span class="token operator">:</span> <span class="token parameter">salary</span> <span class="token operator">=></span> <span class="token number">3</span> <span class="token operator">*</span> salary<span class="token punctuation">,</span>
+    <span class="token function-variable function">B</span><span class="token operator">:</span> <span class="token parameter">salary</span> <span class="token operator">=></span> <span class="token number">2</span> <span class="token operator">*</span> salary<span class="token punctuation">,</span>
+    <span class="token function-variable function">C</span><span class="token operator">:</span> <span class="token parameter">salary</span> <span class="token operator">=></span> salary<span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 环境类</span>
+<span class="token keyword">function</span> <span class="token function">getBouns</span> <span class="token punctuation">(</span><span class="token parameter">level<span class="token punctuation">,</span>salary</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> strategies<span class="token punctuation">[</span>level<span class="token punctuation">]</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+
+
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><blockquote>
+<p>可以使得项目的一个可维护度和代码的整洁度得到一个大幅度的提升</p>
 </blockquote>
 
                 
@@ -439,7 +476,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://keyboarder-yang.github.io/2022/05/18/JavaScript/Class/">https://keyboarder-yang.github.io/2022/05/18/JavaScript/Class/</a>
+                    <a href="https://keyboarder-yang.github.io/2022/05/22/DesignPattern/StrategyPattern/">https://keyboarder-yang.github.io/2022/05/22/DesignPattern/StrategyPattern/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -477,8 +514,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%B1%BB-class/">
-                                    <span class="chip bg-color">类 class</span>
+                                <a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+                                    <span class="chip bg-color">策略模式</span>
                                 </a>
                             
                         </div>
@@ -523,46 +560,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/05/18/JavaScript/This/">
+                <a href="/2022/05/22/DesignPattern/StrategyPattern/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="js学习 --- this指向问题">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="设计模式学习 --- 策略模式">
                         
-                        <span class="card-title">js学习 --- this指向问题</span>
+                        <span class="card-title">设计模式学习 --- 策略模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            对于This指向的一些简单理解
+                            对于策略模式的一些简单理解
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-18
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/JavaScript/" class="post-category">
-                                    JavaScript
+                            <a href="/categories/DesignPattern/" class="post-category">
+                                    DesignPattern
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/this%E6%8C%87%E5%90%91/">
-                        <span class="chip bg-color">this指向</span>
+                    <a href="/tags/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">策略模式</span>
                     </a>
                     
                 </div>
@@ -576,24 +615,24 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/05/17/DesignPattern/SingletonPattern/">
+                <a href="/2022/05/22/DesignPattern/ObservePattern/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="设计模式学习 --- 单例模式">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="设计模式学习 --- 观察者模式">
                         
-                        <span class="card-title">设计模式学习 --- 单例模式</span>
+                        <span class="card-title">设计模式学习 --- 观察者模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            对于单例模式的一些简单理解
+                            对于观察者模式的一些简单理解
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-17
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-22
                             </span>
                         <span class="publish-author">
                             
@@ -610,8 +649,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">单例模式</span>
+                    <a href="/tags/observe-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">observe 观察者模式</span>
                     </a>
                     
                 </div>
