@@ -1369,4 +1369,50 @@ let user &#x3D; &#123;
         <tag>工厂模式</tag>
       </tags>
   </entry>
+  <entry>
+    <title>js学习 --- 数据类型</title>
+    <url>/2022/06/03/JavaScript/DataType/</url>
+    <content><![CDATA[<h4 id="类别"><a href="#类别" class="headerlink" title="类别"></a>类别</h4><ol>
+<li>基本数据类型：<code>String</code>,<code>Number</code>,<code>Boolean</code>,<code>undefined</code>,<code>null</code>,<code>Symbol</code></li>
+<li>引用数据类型：<code>Object,Array</code>,<code>Function</code>,<code>Date</code>,<code>RegExp</code>,<code>Error</code></li>
+</ol>
+<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>基本类型的数据都是按值传递，引用类型的数据都是按照引用（内存地址）传递，基本类型数据存储在栈内存中，引用类型数据存储在堆内存中，在栈内存中存储的仅是引用类型数据的引用地址</p>
+<p><a href="https://imgtu.com/i/XUQqvd"><img src="https://s1.ax1x.com/2022/06/03/XUQqvd.png" alt="XUQqvd.png"></a></p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>数据类型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js学习 --- 原型和原型链</title>
+    <url>/2022/06/03/JavaScript/Prototype/</url>
+    <content><![CDATA[<h4 id="相关名称"><a href="#相关名称" class="headerlink" title="相关名称"></a>相关名称</h4><blockquote>
+<ul>
+<li><code>prototype</code>: 原型</li>
+<li><code>__proto__</code>:  原型链（链接点）,<strong>原型链是由<code>__proto__</code>连接起来的‘链条’</strong></li>
+</ul>
+</blockquote>
+<h4 id="从属关系"><a href="#从属关系" class="headerlink" title="从属关系"></a>从属关系</h4><blockquote>
+<p><code>prototype</code>  —&gt; 函数的一个属性：就是一个普通对象{}</p>
+<p><code>__proto__</code>—&gt; 对象<code>Object</code>的一个属性： 对象{}</p>
+<p>对象的<code>__proto__</code>保存着该对象的构造函数的<code>prototype</code></p>
+</blockquote>
+<h4 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h4><blockquote>
+<ul>
+<li>实例的<code>__proto__</code> 和 构造函数的<code>prototype</code>是全等的</li>
+<li>构造函数的<code>prototype</code>的<code>__proto__</code>和<code>Object.prototype</code>是全等的。</li>
+<li><code>Object.prototype.__proto__</code>  的返回值是null</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>原型链</tag>
+      </tags>
+  </entry>
 </search>
