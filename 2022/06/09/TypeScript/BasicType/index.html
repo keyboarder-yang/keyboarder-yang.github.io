@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ts学习 --- 介绍, html,javascript,css">
-    <meta name="description" content="ts入门介绍">
+    <meta name="keywords" content="ts学习 --- 基本类型, html,javascript,css">
+    <meta name="description" content="ts基础类型">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>ts学习 --- 介绍 | 前端学习笔记</title>
+    <title>ts学习 --- 基本类型 | 前端学习笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -225,12 +225,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ts学习 --- 介绍</h1>
+                    <h1 class="description center-align post-title">ts学习 --- 基本类型</h1>
                 </div>
             </div>
         </div>
@@ -371,7 +371,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-06-08
+                    2022-06-09
                 </div>
                 
 
@@ -385,7 +385,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    222
+                    327
                 </div>
                 
 
@@ -410,31 +410,55 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="TypeScript是什么"><a href="#TypeScript是什么" class="headerlink" title="TypeScript是什么"></a><code>TypeScript</code>是什么</h4><blockquote>
-<ul>
-<li><code>TypeScript </code>是<code>JavaScript</code>的超集</li>
-<li>在<code>JS</code>基础之上，为<code>JS</code>添加了类型支持</li>
-<li><code>TS</code>是静态型编程语言（编译期做类型检查），<code>JS</code>是动态型编程语言（执行期）做类型检查。</li>
-</ul>
+                <h4 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h4><blockquote>
+<p>定义变量、函数参数，函数返回值等的数据类型</p>
 </blockquote>
-<pre class="language-none"><code class="language-none">let age:number &#x3D; 18</code></pre>
+<h5 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a>boolean</h5><pre class="language-none"><code class="language-none">let isDone: boolean &#x3D; false;
+isDone &#x3D; 5; &#x2F;&#x2F; Type &#39;number&#39; is not assignable to type &#39;boolean&#39;.</code></pre>
 
-<h4 id="TypeScript-为什么要添加类型支持"><a href="#TypeScript-为什么要添加类型支持" class="headerlink" title="TypeScript 为什么要添加类型支持"></a><code>TypeScript</code> 为什么要添加类型支持</h4><blockquote>
-<p><code>JS</code>的类型系统存在‘先天缺陷’，<code>JS</code>代码中绝大部分错误都是类型错误，影响开发效率。</p>
+<h5 id="number"><a href="#number" class="headerlink" title="number"></a>number</h5><pre class="language-none"><code class="language-none">let num:number &#x3D; 10;
+num &#x3D; true; &#x2F;&#x2F; Type &#39;boolean&#39; is not assignable to type &#39;number&#39;</code></pre>
+
+<h5 id="string"><a href="#string" class="headerlink" title="string"></a>string</h5><pre class="language-none"><code class="language-none">let name:string &#x3D; &#39;yanghong&#39;;</code></pre>
+
+<h5 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h5><pre class="language-none"><code class="language-none">let undef:undefined &#x3D; undefined;</code></pre>
+
+<h5 id="null"><a href="#null" class="headerlink" title="null"></a>null</h5><pre class="language-none"><code class="language-none">let nullVal:null &#x3D; null;</code></pre>
+
+<h5 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h5><pre class="language-none"><code class="language-none">let arr:Array &#x3D; [];
+let arr:number[] &#x3D; [1,2,3];
+let arr:Array&lt;number&gt; &#x3D; [1,2,3]</code></pre>
+
+<h5 id="object"><a href="#object" class="headerlink" title="object"></a>object</h5><pre class="language-none"><code class="language-none">let obj:object &#x3D; &#123;&#125;;
+obj &#x3D; null;
+obj &#x3D; &#123;name:&#39;yanghong&#39;&#125;</code></pre>
+
+<h5 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h5><blockquote>
+<p>元组类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同。</p>
 </blockquote>
-<h4 id="TypeScript的优势"><a href="#TypeScript的优势" class="headerlink" title="TypeScript的优势"></a><code>TypeScript</code>的优势</h4><blockquote>
+<pre class="language-none"><code class="language-none">let x: [string,number] &#x3D; [&#39;yanghong&#39;,1];</code></pre>
+
+<h5 id="any"><a href="#any" class="headerlink" title="any"></a>any</h5><blockquote>
+<p>有时候，我们会想要为那些在编程阶段还不清楚类型的变量指定一个类型。 这种情况下，我们可以使用 <code>any</code>类型来标记这些变量：</p>
+</blockquote>
+<pre class="language-none"><code class="language-none">let notSure:any &#x3D; 4;
+notSure &#x3D; &#39;yanghong&#39;;
+notSure &#x3D; true;</code></pre>
+
+<h5 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h5><blockquote>
+<p>简言之：告诉编译器，我知道自己是什么类型，也知道自己在干什么。有两种方式</p>
 <ul>
-<li><p>更早的发现错误，减少程序出错概率，提升开发效率</p>
-</li>
-<li><p>强大的类型系统提升了代码的可维护性，使得重构代码更加的容易</p>
-</li>
-<li><p>支持最新的<code>ECMAScript</code>语法，优先体验最新的语法</p>
-</li>
-<li><p>TS类型推断机制</p>
-</li>
-<li><p><code>Vue3</code>源码使用<code>TS</code>重写，<code>Angular</code>默认支持<code>TS</code>，<code>React</code>与<code>TS</code>完美配合，<code>TypeScript</code>已成为中大型前端项目的首先编程语言</p>
-</li>
+<li><type> value</li>
+<li>value as type</li>
 </ul>
+</blockquote>
+<pre class="language-none"><code class="language-none">let someValue: any &#x3D; &#39;yanghong&#39;;
+let strLength: number &#x3D; (&lt;string&gt;someValue).length;
+&#x2F;&#x2F; 或者
+strLength: number &#x3D; (someValue as string).length;</code></pre>
+
+<h5 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h5><blockquote>
+<p>根据变量初次定义时的类型。若定义未赋值，则类型为any类型</p>
 </blockquote>
 
                 
@@ -462,7 +486,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://keyboarder-yang.github.io/2022/06/08/TypeScript/Introduce/">https://keyboarder-yang.github.io/2022/06/08/TypeScript/Introduce/</a>
+                    <a href="https://keyboarder-yang.github.io/2022/06/09/TypeScript/BasicType/">https://keyboarder-yang.github.io/2022/06/09/TypeScript/BasicType/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -550,24 +574,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/06/09/TypeScript/BasicType/">
+                <a href="/2022/06/11/TypeScript/Interface/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="ts学习 --- 基本类型">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="ts学习 --- 接口">
                         
-                        <span class="card-title">ts学习 --- 基本类型</span>
+                        <span class="card-title">ts学习 --- 接口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ts基础类型
+                            ts接口总结
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-09
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
                         </span>
                         <span class="publish-author">
                             
@@ -599,31 +623,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/06/03/JavaScript/DataType/">
+                <a href="/2022/06/08/TypeScript/Introduce/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="js学习 --- 数据类型">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="ts学习 --- 介绍">
                         
-                        <span class="card-title">js学习 --- 数据类型</span>
+                        <span class="card-title">ts学习 --- 介绍</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            对于数据类型的总结
+                            ts入门介绍
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/JavaScript/" class="post-category">
-                                    JavaScript
+                            <a href="/categories/TypeScript/" class="post-category">
+                                    TypeScript
                                 </a>
                             
                             
@@ -633,8 +657,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-                        <span class="chip bg-color">数据类型</span>
+                    <a href="/tags/ts/">
+                        <span class="chip bg-color">ts</span>
                     </a>
                     
                 </div>

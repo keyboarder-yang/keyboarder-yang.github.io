@@ -1453,4 +1453,154 @@ let user &#x3D; &#123;
         <tag>ts</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ts学习 --- 基本类型</title>
+    <url>/2022/06/09/TypeScript/BasicType/</url>
+    <content><![CDATA[<h4 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h4><blockquote>
+<p>定义变量、函数参数，函数返回值等的数据类型</p>
+</blockquote>
+<h5 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a>boolean</h5><pre class="language-none"><code class="language-none">let isDone: boolean &#x3D; false;
+isDone &#x3D; 5; &#x2F;&#x2F; Type &#39;number&#39; is not assignable to type &#39;boolean&#39;.</code></pre>
+
+<h5 id="number"><a href="#number" class="headerlink" title="number"></a>number</h5><pre class="language-none"><code class="language-none">let num:number &#x3D; 10;
+num &#x3D; true; &#x2F;&#x2F; Type &#39;boolean&#39; is not assignable to type &#39;number&#39;</code></pre>
+
+<h5 id="string"><a href="#string" class="headerlink" title="string"></a>string</h5><pre class="language-none"><code class="language-none">let name:string &#x3D; &#39;yanghong&#39;;</code></pre>
+
+<h5 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h5><pre class="language-none"><code class="language-none">let undef:undefined &#x3D; undefined;</code></pre>
+
+<h5 id="null"><a href="#null" class="headerlink" title="null"></a>null</h5><pre class="language-none"><code class="language-none">let nullVal:null &#x3D; null;</code></pre>
+
+<h5 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h5><pre class="language-none"><code class="language-none">let arr:Array &#x3D; [];
+let arr:number[] &#x3D; [1,2,3];
+let arr:Array&lt;number&gt; &#x3D; [1,2,3]</code></pre>
+
+<h5 id="object"><a href="#object" class="headerlink" title="object"></a>object</h5><pre class="language-none"><code class="language-none">let obj:object &#x3D; &#123;&#125;;
+obj &#x3D; null;
+obj &#x3D; &#123;name:&#39;yanghong&#39;&#125;</code></pre>
+
+<h5 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h5><blockquote>
+<p>元组类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同。</p>
+</blockquote>
+<pre class="language-none"><code class="language-none">let x: [string,number] &#x3D; [&#39;yanghong&#39;,1];</code></pre>
+
+<h5 id="any"><a href="#any" class="headerlink" title="any"></a>any</h5><blockquote>
+<p>有时候，我们会想要为那些在编程阶段还不清楚类型的变量指定一个类型。 这种情况下，我们可以使用 <code>any</code>类型来标记这些变量：</p>
+</blockquote>
+<pre class="language-none"><code class="language-none">let notSure:any &#x3D; 4;
+notSure &#x3D; &#39;yanghong&#39;;
+notSure &#x3D; true;</code></pre>
+
+<h5 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h5><blockquote>
+<p>简言之：告诉编译器，我知道自己是什么类型，也知道自己在干什么。有两种方式</p>
+<ul>
+<li><type> value</li>
+<li>value as type</li>
+</ul>
+</blockquote>
+<pre class="language-none"><code class="language-none">let someValue: any &#x3D; &#39;yanghong&#39;;
+let strLength: number &#x3D; (&lt;string&gt;someValue).length;
+&#x2F;&#x2F; 或者
+strLength: number &#x3D; (someValue as string).length;</code></pre>
+
+<h5 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h5><blockquote>
+<p>根据变量初次定义时的类型。若定义未赋值，则类型为any类型</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>ts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ts学习 --- 接口</title>
+    <url>/2022/06/11/TypeScript/Interface/</url>
+    <content><![CDATA[<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><blockquote>
+<p><code>TypeScript</code>的核心原则之一就是对值具有的结构进行类型检查。接口的作用就是为这些类型命名和为你的代码定义’契约’或者可以理解为自定义的类型</p>
+</blockquote>
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><h5 id="1-普通用法"><a href="#1-普通用法" class="headerlink" title="1. 普通用法"></a>1. 普通用法</h5><pre class="language-none"><code class="language-none">&#x2F;&#x2F; 定义一个Info接口，所有Info类型的变量必须有name:string,age:number两个属性
+interface Info &#123;
+    name: string;
+    age: number;
+&#125;</code></pre>
+
+<h5 id="2-可选属性"><a href="#2-可选属性" class="headerlink" title="2. 可选属性"></a>2. 可选属性</h5><pre class="language-none"><code class="language-none">&#x2F;&#x2F; 定义一个接口，其中name和age均为可选属性
+interface Info &#123;
+    name?: string;
+    age?: number;
+&#125;</code></pre>
+
+<h5 id="3-只读属性"><a href="#3-只读属性" class="headerlink" title="3. 只读属性"></a>3. 只读属性</h5><pre class="language-none"><code class="language-none">&#x2F;&#x2F; 定义一个接口，其中name和age均为只读属性
+&#x2F;&#x2F; 赋值后不可再修改
+interface Info &#123;
+    readonly name: string;
+    readonly age: number;
+&#125;
+let info:Info &#x3D; &#123;name: &#39;yanghong&#39;,age: 18&#125;
+info.age &#x3D; 19 &#x2F;&#x2F;error!!!</code></pre>
+
+<h5 id="4-函数类型"><a href="#4-函数类型" class="headerlink" title="4. 函数类型"></a>4. 函数类型</h5><blockquote>
+<p>通过接口的方式作为函数的类型来使用，为了使用接口表示函数类型，我们需要给接口定义一个<strong>调用签名</strong></p>
+<blockquote>
+<p>调用签名：就像是一个只有参数列表和返回值类型的函数定义。参数列表里的每个参数都需要有类型</p>
+</blockquote>
+</blockquote>
+<pre class="language-none"><code class="language-none">interface IsEqual &#123;
+	(a:number,b:number):boolean
+&#125;
+const isEqual:IsEqual &#x3D; function(a:number,b:number):boolean&#123;
+    return a&#x3D;&#x3D;&#x3D;b
+&#125;</code></pre>
+
+<h5 id="5-类类型"><a href="#5-类类型" class="headerlink" title="5. 类类型"></a>5. 类类型</h5><blockquote>
+<p>类的类型也可以通过接口来实现</p>
+</blockquote>
+<pre class="language-none"><code class="language-none">interface SayName &#123;
+	sayName()
+&#125;
+interface SayAge &#123;
+	sayAge()
+&#125;
+class Info implements SayName,SayAge &#123;
+	sayName() &#123;
+		console.log(&#39;yh&#39;)
+	&#125;,
+    sayAge() &#123;
+        console.log(18)
+    &#125;
+&#125;</code></pre>
+
+<h5 id="6-接口继承"><a href="#6-接口继承" class="headerlink" title="6. 接口继承"></a>6. 接口继承</h5><blockquote>
+<p>接口可以继承，类似于类的继承</p>
+</blockquote>
+<pre class="language-none"><code class="language-none">interface SayName &#123;
+	sayName()
+&#125;
+interface SayAge &#123;
+	sayAge()
+&#125;
+interface SayAll extents SayName,SayAge&#123;&#125;
+
+class Info implements SayAll &#123;
+    sayName() &#123;
+		console.log(&#39;yh&#39;)
+	&#125;,
+    sayAge() &#123;
+        console.log(18)
+    &#125;
+&#125;</code></pre>
+
+<blockquote>
+<p>接口和接口之间叫继承（extends），类和接口之间是实现（implements）</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>ts</tag>
+      </tags>
+  </entry>
 </search>

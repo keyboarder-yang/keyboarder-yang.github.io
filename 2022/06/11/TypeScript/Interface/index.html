@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ts学习 --- 介绍, html,javascript,css">
-    <meta name="description" content="ts入门介绍">
+    <meta name="keywords" content="ts学习 --- 接口, html,javascript,css">
+    <meta name="description" content="ts接口总结">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
 
     
 
-    <title>ts学习 --- 介绍 | 前端学习笔记</title>
+    <title>ts学习 --- 接口 | 前端学习笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -225,12 +225,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ts学习 --- 介绍</h1>
+                    <h1 class="description center-align post-title">ts学习 --- 接口</h1>
                 </div>
             </div>
         </div>
@@ -371,7 +371,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-06-08
+                    2022-06-11
                 </div>
                 
 
@@ -385,7 +385,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    222
+                    440
                 </div>
                 
 
@@ -410,31 +410,83 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="TypeScript是什么"><a href="#TypeScript是什么" class="headerlink" title="TypeScript是什么"></a><code>TypeScript</code>是什么</h4><blockquote>
-<ul>
-<li><code>TypeScript </code>是<code>JavaScript</code>的超集</li>
-<li>在<code>JS</code>基础之上，为<code>JS</code>添加了类型支持</li>
-<li><code>TS</code>是静态型编程语言（编译期做类型检查），<code>JS</code>是动态型编程语言（执行期）做类型检查。</li>
-</ul>
+                <h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><blockquote>
+<p><code>TypeScript</code>的核心原则之一就是对值具有的结构进行类型检查。接口的作用就是为这些类型命名和为你的代码定义’契约’或者可以理解为自定义的类型</p>
 </blockquote>
-<pre class="language-none"><code class="language-none">let age:number &#x3D; 18</code></pre>
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><h5 id="1-普通用法"><a href="#1-普通用法" class="headerlink" title="1. 普通用法"></a>1. 普通用法</h5><pre class="language-none"><code class="language-none">&#x2F;&#x2F; 定义一个Info接口，所有Info类型的变量必须有name:string,age:number两个属性
+interface Info &#123;
+    name: string;
+    age: number;
+&#125;</code></pre>
 
-<h4 id="TypeScript-为什么要添加类型支持"><a href="#TypeScript-为什么要添加类型支持" class="headerlink" title="TypeScript 为什么要添加类型支持"></a><code>TypeScript</code> 为什么要添加类型支持</h4><blockquote>
-<p><code>JS</code>的类型系统存在‘先天缺陷’，<code>JS</code>代码中绝大部分错误都是类型错误，影响开发效率。</p>
+<h5 id="2-可选属性"><a href="#2-可选属性" class="headerlink" title="2. 可选属性"></a>2. 可选属性</h5><pre class="language-none"><code class="language-none">&#x2F;&#x2F; 定义一个接口，其中name和age均为可选属性
+interface Info &#123;
+    name?: string;
+    age?: number;
+&#125;</code></pre>
+
+<h5 id="3-只读属性"><a href="#3-只读属性" class="headerlink" title="3. 只读属性"></a>3. 只读属性</h5><pre class="language-none"><code class="language-none">&#x2F;&#x2F; 定义一个接口，其中name和age均为只读属性
+&#x2F;&#x2F; 赋值后不可再修改
+interface Info &#123;
+    readonly name: string;
+    readonly age: number;
+&#125;
+let info:Info &#x3D; &#123;name: &#39;yanghong&#39;,age: 18&#125;
+info.age &#x3D; 19 &#x2F;&#x2F;error!!!</code></pre>
+
+<h5 id="4-函数类型"><a href="#4-函数类型" class="headerlink" title="4. 函数类型"></a>4. 函数类型</h5><blockquote>
+<p>通过接口的方式作为函数的类型来使用，为了使用接口表示函数类型，我们需要给接口定义一个<strong>调用签名</strong></p>
+<blockquote>
+<p>调用签名：就像是一个只有参数列表和返回值类型的函数定义。参数列表里的每个参数都需要有类型</p>
 </blockquote>
-<h4 id="TypeScript的优势"><a href="#TypeScript的优势" class="headerlink" title="TypeScript的优势"></a><code>TypeScript</code>的优势</h4><blockquote>
-<ul>
-<li><p>更早的发现错误，减少程序出错概率，提升开发效率</p>
-</li>
-<li><p>强大的类型系统提升了代码的可维护性，使得重构代码更加的容易</p>
-</li>
-<li><p>支持最新的<code>ECMAScript</code>语法，优先体验最新的语法</p>
-</li>
-<li><p>TS类型推断机制</p>
-</li>
-<li><p><code>Vue3</code>源码使用<code>TS</code>重写，<code>Angular</code>默认支持<code>TS</code>，<code>React</code>与<code>TS</code>完美配合，<code>TypeScript</code>已成为中大型前端项目的首先编程语言</p>
-</li>
-</ul>
+</blockquote>
+<pre class="language-none"><code class="language-none">interface IsEqual &#123;
+	(a:number,b:number):boolean
+&#125;
+const isEqual:IsEqual &#x3D; function(a:number,b:number):boolean&#123;
+    return a&#x3D;&#x3D;&#x3D;b
+&#125;</code></pre>
+
+<h5 id="5-类类型"><a href="#5-类类型" class="headerlink" title="5. 类类型"></a>5. 类类型</h5><blockquote>
+<p>类的类型也可以通过接口来实现</p>
+</blockquote>
+<pre class="language-none"><code class="language-none">interface SayName &#123;
+	sayName()
+&#125;
+interface SayAge &#123;
+	sayAge()
+&#125;
+class Info implements SayName,SayAge &#123;
+	sayName() &#123;
+		console.log(&#39;yh&#39;)
+	&#125;,
+    sayAge() &#123;
+        console.log(18)
+    &#125;
+&#125;</code></pre>
+
+<h5 id="6-接口继承"><a href="#6-接口继承" class="headerlink" title="6. 接口继承"></a>6. 接口继承</h5><blockquote>
+<p>接口可以继承，类似于类的继承</p>
+</blockquote>
+<pre class="language-none"><code class="language-none">interface SayName &#123;
+	sayName()
+&#125;
+interface SayAge &#123;
+	sayAge()
+&#125;
+interface SayAll extents SayName,SayAge&#123;&#125;
+
+class Info implements SayAll &#123;
+    sayName() &#123;
+		console.log(&#39;yh&#39;)
+	&#125;,
+    sayAge() &#123;
+        console.log(18)
+    &#125;
+&#125;</code></pre>
+
+<blockquote>
+<p>接口和接口之间叫继承（extends），类和接口之间是实现（implements）</p>
 </blockquote>
 
                 
@@ -462,7 +514,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://keyboarder-yang.github.io/2022/06/08/TypeScript/Introduce/">https://keyboarder-yang.github.io/2022/06/08/TypeScript/Introduce/</a>
+                    <a href="https://keyboarder-yang.github.io/2022/06/11/TypeScript/Interface/">https://keyboarder-yang.github.io/2022/06/11/TypeScript/Interface/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -546,29 +598,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/06/09/TypeScript/BasicType/">
+                <a href="/2022/06/11/TypeScript/Interface/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="ts学习 --- 基本类型">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="ts学习 --- 接口">
                         
-                        <span class="card-title">ts学习 --- 基本类型</span>
+                        <span class="card-title">ts学习 --- 接口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ts基础类型
+                            ts接口总结
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -581,6 +634,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -599,31 +653,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/06/03/JavaScript/DataType/">
+                <a href="/2022/06/09/TypeScript/BasicType/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="js学习 --- 数据类型">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="ts学习 --- 基本类型">
                         
-                        <span class="card-title">js学习 --- 数据类型</span>
+                        <span class="card-title">ts学习 --- 基本类型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            对于数据类型的总结
+                            ts基础类型
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/JavaScript/" class="post-category">
-                                    JavaScript
+                            <a href="/categories/TypeScript/" class="post-category">
+                                    TypeScript
                                 </a>
                             
                             
@@ -633,8 +687,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-                        <span class="chip bg-color">数据类型</span>
+                    <a href="/tags/ts/">
+                        <span class="chip bg-color">ts</span>
                     </a>
                     
                 </div>
