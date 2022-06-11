@@ -179,7 +179,16 @@ hexo s -g #生产并开启本地服务</code></pre>
     <title>js学习 --- class</title>
     <url>/2022/05/18/JavaScript/Class/</url>
     <content><![CDATA[<h4 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h4><blockquote>
-<p>类中constructor内，this指向 new出来的实例。而类中的this指向该构造类。</p>
+<ol>
+<li><p>类中必须有一个constructor构造方法，不写默认会被添加一个空的构造方法</p>
+</li>
+<li><p>类中constructor构造方法内，this指向 new出来的实例。</p>
+</li>
+<li><p>类是不存在变量提升的。</p>
+</li>
+<li><p>class中的取值函数get和存值函数set：类似与object.defineProperty中的get和set。可以实现对属性的拦截</p>
+</li>
+</ol>
 </blockquote>
 ]]></content>
       <categories>
@@ -400,99 +409,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
       </categories>
       <tags>
         <tag>js 解构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>js方法 --- 树的遍历</title>
-    <url>/2021/06/20/JavaScript/treeTraversal/</url>
-    <content><![CDATA[<h4 id="树的遍历（深度优先遍历和广度优先遍历–js）"><a href="#树的遍历（深度优先遍历和广度优先遍历–js）" class="headerlink" title="树的遍历（深度优先遍历和广度优先遍历–js）"></a>树的遍历（深度优先遍历和广度优先遍历–js）</h4><blockquote>
-<p>原文地址： <a href="https://www.cnblogs.com/ming1025/p/13677512.html">https://www.cnblogs.com/ming1025/p/13677512.html</a></p>
-</blockquote>
-<h5 id="1-广度优先"><a href="#1-广度优先" class="headerlink" title="1.  广度优先"></a>1.  广度优先</h5><blockquote>
-<p>从上至下，从左至右，（可以理解为按层进行遍历）对树结构进行遍历，广度优先遍历用 <strong>队列</strong>（先进先出）进行存储节点对象</p>
-</blockquote>
-<h5 id="2-深度优先"><a href="#2-深度优先" class="headerlink" title="2. 深度优先"></a>2. 深度优先</h5><blockquote>
-<p>访问完一颗子树再去访问后面的子树，深度优先遍历使用 <strong>栈</strong> （先进后出）结构进行存储树节点对象</p>
-</blockquote>
-<h5 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h5><pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 树结构数据</span>
-<span class="token keyword">let</span> tree <span class="token operator">=</span> <span class="token punctuation">[</span>
-  <span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span> 
-        <span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1-1'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1-1'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-		<span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'1-2'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点1-2'</span> <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">]</span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-  <span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'2'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点2'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">&#123;</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'2-1'</span><span class="token punctuation">,</span> <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'节点2-1'</span> <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">]</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">]</span></code></pre>
-
-<ol>
-<li><p>广度优先遍历的实现</p>
-<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 广度优先</span>
-<span class="token keyword">function</span> <span class="token function">treeForeach</span> <span class="token punctuation">(</span><span class="token parameter">tree<span class="token punctuation">,</span> func</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-  <span class="token keyword">let</span> node<span class="token punctuation">,</span> list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>tree<span class="token punctuation">]</span>
-  <span class="token keyword">while</span> <span class="token punctuation">(</span>node <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">func</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span>
-    node<span class="token punctuation">.</span>children <span class="token operator">&amp;&amp;</span> list<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">...</span>node<span class="token punctuation">.</span>children<span class="token punctuation">)</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span></code></pre>
-
-
-</li>
-<li><p>深度优先遍历的实现</p>
-<pre class="language-none"><code class="language-none">&#x2F;&#x2F; 1.深度优先遍历的递归方法（前序）
-function treeForeach (tree, func) &#123;
-  tree.forEach(data &#x3D;&gt; &#123;
-    func(data)
-    data.children &amp;&amp; treeForeach(data.children, func) &#x2F;&#x2F; 遍历子树
-  &#125;)
-&#125;
-
-&#x2F;&#x2F; 2.深度优先遍历的递归方法（后序）
-function treeForeach (tree, func) &#123;
-  tree.forEach(data &#x3D;&gt; &#123;
-    data.children &amp;&amp; treeForeach(data.children, func) &#x2F;&#x2F; 遍历子树
-    func(data)
-  &#125;)
-&#125;
-
-&#x2F;&#x2F; 3. 深度优先遍历的非递归实现（前序）
-function treeForeach (tree, func) &#123;
-  let node, list &#x3D; [...tree]
-  while (node &#x3D; list.shift()) &#123;
-    func(node)
-    node.children &amp;&amp; list.unshift(...node.children)
-  &#125;
-&#125;
-
-&#x2F;&#x2F; 4. 深度优先遍历的非递归实现（后序）
-function treeForeach (tree, func) &#123;
-  let node, list &#x3D; [...tree], i &#x3D;  0
-  while (node &#x3D; list[i]) &#123;
-    let childCount &#x3D; node.children ? node.children.length : 0
-    if (!childCount || node.children[childCount - 1] &#x3D;&#x3D;&#x3D; list[i - 1]) &#123;
-      func(node)
-      i++
-    &#125; else &#123;
-      list.splice(i, 0, ...node.children)
-    &#125;
-  &#125;
-&#125;
-</code></pre></li>
-</ol>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>树 遍历 JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -953,12 +869,6 @@ let user &#x3D; &#123;
 <p>关联行为 场景 , 建立一套 触发机制 ;</p>
 <p><strong>如 :</strong> 用户关注某个商品的价格 , 降价时进行通知 , 这样 用户 和 商品 产生了关联 , 触发机制就是 商品降价 。</p>
 </blockquote>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><blockquote>
-<ul>
-<li>依赖过多 : 观察者 之间 细节依赖 过多 , 会增加 时间消耗 和 程序的复杂程度 ;<br><strong>细节依赖</strong> 指的是 触发机制; 如果 观察者设置过多 , 每次触发都要花很长时间去处理通知 ;</li>
-<li>循环调用 : 避免循环调用 , <strong>观察者</strong>与 <strong>被观察者</strong> 之间 绝对不允许循环依赖 , 否则会触发 二者 之间的循环调用 , 导致系统崩溃 ;</li>
-</ul>
-</blockquote>
 ]]></content>
       <categories>
         <category>DesignPattern</category>
@@ -1377,7 +1287,7 @@ let user &#x3D; &#123;
 <li>引用数据类型：<code>Object,Array</code>,<code>Function</code>,<code>Date</code>,<code>RegExp</code>,<code>Error</code>,<code>Set</code>,<code>Map</code>,<code>Math</code></li>
 </ol>
 <h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>基本类型的数据都是按值传递，引用类型的数据都是按照引用（内存地址）传递，基本类型数据存储在栈内存中，引用类型数据存储在堆内存中，在栈内存中存储的仅是引用类型数据的引用地址</p>
-<p><a href="https://imgtu.com/i/XUQqvd"><img src="https://s1.ax1x.com/2022/06/03/XUQqvd.png" alt="XUQqvd.png"></a></p>
+<p><a href="https://imgtu.com/i/XUQqvd"><img src="https://s1.ax1x.com/2022/06/03/XUQqvd.png" alt="图解"></a></p>
 <h4 id="数据类型的检测方式"><a href="#数据类型的检测方式" class="headerlink" title="数据类型的检测方式"></a>数据类型的检测方式</h4><blockquote>
 <ul>
 <li><code>typeof</code></li>
@@ -1467,7 +1377,7 @@ let user &#x3D; &#123;
 
 
 <blockquote>
-<p><a href="https://www.bilibili.com/video/BV1Eh411s72a?spm_id_from=333.337.search-card.all.click">文章总结出处</a></p>
+<p>文章出处：<a href="https://www.bilibili.com/video/BV1Eh411s72a?spm_id_from=333.337.search-card.all.click">哔哩哔哩视频</a></p>
 </blockquote>
 ]]></content>
       <categories>
@@ -1504,6 +1414,43 @@ let user &#x3D; &#123;
       </categories>
       <tags>
         <tag>原型链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ts学习 --- 介绍</title>
+    <url>/2022/06/08/TypeScript/Introduce/</url>
+    <content><![CDATA[<h4 id="TypeScript是什么"><a href="#TypeScript是什么" class="headerlink" title="TypeScript是什么"></a><code>TypeScript</code>是什么</h4><blockquote>
+<ul>
+<li><code>TypeScript </code>是<code>JavaScript</code>的超集</li>
+<li>在<code>JS</code>基础之上，为<code>JS</code>添加了类型支持</li>
+<li><code>TS</code>是静态型编程语言（编译期做类型检查），<code>JS</code>是动态型编程语言（执行期）做类型检查。</li>
+</ul>
+</blockquote>
+<pre class="language-none"><code class="language-none">let age:number &#x3D; 18</code></pre>
+
+<h4 id="TypeScript-为什么要添加类型支持"><a href="#TypeScript-为什么要添加类型支持" class="headerlink" title="TypeScript 为什么要添加类型支持"></a><code>TypeScript</code> 为什么要添加类型支持</h4><blockquote>
+<p><code>JS</code>的类型系统存在‘先天缺陷’，<code>JS</code>代码中绝大部分错误都是类型错误，影响开发效率。</p>
+</blockquote>
+<h4 id="TypeScript的优势"><a href="#TypeScript的优势" class="headerlink" title="TypeScript的优势"></a><code>TypeScript</code>的优势</h4><blockquote>
+<ul>
+<li><p>更早的发现错误，减少程序出错概率，提升开发效率</p>
+</li>
+<li><p>强大的类型系统提升了代码的可维护性，使得重构代码更加的容易</p>
+</li>
+<li><p>支持最新的<code>ECMAScript</code>语法，优先体验最新的语法</p>
+</li>
+<li><p>TS类型推断机制</p>
+</li>
+<li><p><code>Vue3</code>源码使用<code>TS</code>重写，<code>Angular</code>默认支持<code>TS</code>，<code>React</code>与<code>TS</code>完美配合，<code>TypeScript</code>已成为中大型前端项目的首先编程语言</p>
+</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>TypeScript</category>
+      </categories>
+      <tags>
+        <tag>ts</tag>
       </tags>
   </entry>
 </search>
