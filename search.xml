@@ -1603,4 +1603,170 @@ class Info implements SayAll &#123;
         <tag>ts</tag>
       </tags>
   </entry>
+  <entry>
+    <title>element-ui --- DatePicker</title>
+    <url>/2022/06/12/Element/DatePicker/</url>
+    <content><![CDATA[<h4 id="ElementUI-—-DatePicker"><a href="#ElementUI-—-DatePicker" class="headerlink" title="ElementUI — DatePicker"></a>ElementUI — DatePicker</h4><blockquote>
+<p>前言：在使用<code>element-ui</code>的日期选择器的过程中，经常会有设置选择日期的范围的需求。</p>
+</blockquote>
+<h5 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h5><blockquote>
+<p>通过向<code>picker-options</code>中传入<code>disabledDate</code>函数的方式可以实现禁用效果</p>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token literal-property property">pickOptions</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">disabledDate</span><span class="token punctuation">(</span><span class="token parameter">time</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token comment">// 1. 根据time.getTime()获取展示的每个日期的时间戳</span>
+        <span class="token comment">// 2. 获取当前日期的时间戳</span>
+        <span class="token comment">// 3. 进行比较，返回结果</span>
+        <span class="token keyword">return</span> <span class="token comment">// 返回true/false</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<blockquote>
+<p>每次都需要去单独写逻辑，很容易出错，所以做了极简的封装,接收四个参数：</p>
+<ul>
+<li><code>time</code>：<code>disabledDate</code>函数提供的参数。必须</li>
+<li><code>type</code>: <code>String</code>类型，<code>before</code>&#x2F;<code>after</code>,表示禁用今日之前的日期还是禁用今日之后的日期。默认：<code>before</code></li>
+<li><code>disabledToday</code>：<code>Boolean</code>类型，表示是否禁用今日日期。默认：<code>true</code></li>
+<li><code>divideDate</code>：<code>String</code> 类型，以<code>-</code>相连。分割日期，以哪一天的日期进行分割。默认当天。如：<code>2022-06-12</code></li>
+</ul>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 禁用函数封装</span>
+<span class="token keyword">function</span> <span class="token function">toDisabled</span><span class="token punctuation">(</span>time<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">'before'</span><span class="token punctuation">,</span> disabledCurrent <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">,</span> divideDate<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> errorTip <span class="token operator">=</span> <span class="token string">'参数传入错误，期望得到：'</span>
+  <span class="token comment">// 当前type的可选项</span>
+  <span class="token keyword">const</span> typeList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'before'</span><span class="token punctuation">,</span> <span class="token string">'after'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> checkParams <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'time'</span><span class="token punctuation">,</span> <span class="token string">'type'</span><span class="token punctuation">,</span> <span class="token string">'disabledCurrent'</span><span class="token punctuation">,</span> <span class="token string">'divideDate'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> checkMap <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-property property">'time'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'time'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">check</span><span class="token operator">:</span> checkTime<span class="token punctuation">,</span>
+      <span class="token literal-property property">expect</span><span class="token operator">:</span> <span class="token string">'Date'</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token string-property property">'type'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'type'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">check</span><span class="token operator">:</span> checkType<span class="token punctuation">,</span>
+      <span class="token literal-property property">expect</span><span class="token operator">:</span> <span class="token string">'before or after'</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token string-property property">'disabledCurrent'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'disabledCurrent'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">check</span><span class="token operator">:</span> checkDisabledCurrent<span class="token punctuation">,</span>
+      <span class="token literal-property property">expect</span><span class="token operator">:</span> <span class="token string">'Boolean'</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token string-property property">'divideDate'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'divideDate'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">check</span><span class="token operator">:</span> checkDivideDate<span class="token punctuation">,</span>
+      <span class="token literal-property property">expect</span><span class="token operator">:</span> <span class="token string">'YYYY-MM-DD'</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token function">checkAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">// 获取当前日期对象</span>
+  <span class="token keyword">const</span> date <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> newTime <span class="token operator">=</span> time<span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 获取当前日期的时间戳</span>
+  <span class="token keyword">const</span> newDividerDate <span class="token operator">=</span> divideDate <span class="token operator">?</span> divideDate <span class="token operator">:</span> date<span class="token punctuation">.</span><span class="token function">getFullYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'-'</span> <span class="token operator">+</span> <span class="token punctuation">(</span>date<span class="token punctuation">.</span><span class="token function">getMonth</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'-'</span> <span class="token operator">+</span> date<span class="token punctuation">.</span><span class="token function">getDate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> currentDate <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>newDividerDate<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> returnMap <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string-property property">'before'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token boolean">true</span><span class="token operator">:</span> newTime <span class="token operator">&lt;=</span> currentDate<span class="token punctuation">,</span>
+      <span class="token boolean">false</span><span class="token operator">:</span> newTime <span class="token operator">&lt;</span> currentDate
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token string-property property">'after'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token boolean">true</span><span class="token operator">:</span> newTime <span class="token operator">>=</span> currentDate<span class="token punctuation">,</span>
+      <span class="token boolean">false</span><span class="token operator">:</span> newTime <span class="token operator">></span> currentDate
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 检查传入的参数 --- type</span>
+  <span class="token keyword">function</span> <span class="token function">checkType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> typeList<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 检查传入的参数 --- disabledCurrent</span>
+  <span class="token keyword">function</span> <span class="token function">checkDisabledCurrent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">typeof</span> <span class="token punctuation">(</span>disabledCurrent<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'boolean'</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 检查传入的参数 --- divideDate</span>
+  <span class="token keyword">function</span> <span class="token function">checkDivideDate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> Reg <span class="token operator">=</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^[1-9]\d&#123;3&#125;-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$</span><span class="token regex-delimiter">/</span></span>
+    <span class="token keyword">return</span> Reg<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>divideDate<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>divideDate <span class="token operator">===</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 检查传入的参数 --- time</span>
+  <span class="token keyword">function</span> <span class="token function">checkTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>time<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'[object Date]'</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// 所有的检查项</span>
+  <span class="token keyword">function</span> <span class="token function">checkAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> checkParams<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>checkMap<span class="token punctuation">[</span>checkParams<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">check</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>checkMap<span class="token punctuation">[</span>checkParams<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">.</span>name <span class="token operator">+</span> errorTip <span class="token operator">+</span> checkMap<span class="token punctuation">[</span>checkParams<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">.</span>expect<span class="token punctuation">)</span>
+        <span class="token keyword">return</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> returnMap<span class="token punctuation">[</span>type<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> returnMap<span class="token punctuation">[</span>type<span class="token punctuation">]</span><span class="token punctuation">[</span>disabledCurrent<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<blockquote>
+<p>使用</p>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">pickerOptions</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">disabledDate</span><span class="token punctuation">(</span><span class="token parameter">time</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">return</span> <span class="token function">toDisabled</span><span class="token punctuation">(</span>time<span class="token punctuation">,</span> <span class="token string">'after'</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span><span class="token string">'2022-07-13'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+]]></content>
+      <categories>
+        <category>ElementUi</category>
+      </categories>
+      <tags>
+        <tag>element</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js学习 --- 事件循环机制</title>
+    <url>/2022/06/11/JavaScript/EventLoop/</url>
+    <content><![CDATA[<h4 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h4><blockquote>
+<ul>
+<li><p><code>js</code>是单线程运行的，每次只能执行一个任务，排队执行。任务分为同步和异步。异步任务永远在同步任务执行完成之后才执行。异步需要基于回调来实现，<code>eventloop</code>就是异步回调的实现原理。</p>
+</li>
+<li><p><code>js</code>中代码分为同步和异步,异步包含微任务和宏任务。区别如下：</p>
+<p><a href="https://imgtu.com/i/XgsCzn"><img src="https://s1.ax1x.com/2022/06/12/XgsCzn.png" alt="宏任务和微任务"></a></p>
+</li>
+</ul>
+</blockquote>
+<h5 id="调用栈（CallStack）"><a href="#调用栈（CallStack）" class="headerlink" title="调用栈（CallStack）"></a>调用栈（<code>CallStack</code>）</h5><blockquote>
+<p>调用栈是一种栈结构（先进后出）当一段<code>js</code>语句执行时，<code>js</code>引擎会将同步代码按照顺序依次压入调用栈中，然后从头开始执行。</p>
+</blockquote>
+<h5 id="事件队列（TaskQueue）"><a href="#事件队列（TaskQueue）" class="headerlink" title="事件队列（TaskQueue）"></a>事件队列（<code>TaskQueue</code>）</h5><blockquote>
+<p>其是一个队列（先进先出），存放异步任务（宏任务队列和微任务队列）</p>
+</blockquote>
+<h5 id="JavaScript执行顺序"><a href="#JavaScript执行顺序" class="headerlink" title="JavaScript执行顺序"></a>JavaScript执行顺序</h5><blockquote>
+<ol>
+<li>代码执行，将同步任务压入调用栈中。</li>
+<li>异步任务暂时放入<code>webcore</code>(根据浏览器而来，<code>-webkit-</code>）中。</li>
+<li>等到异步任务时机到达时（定时器事件到达，或者请求返回等），将异步任务放入事件队列中去。而异步任务又分为宏任务和微任务，所以事件队列中又有宏队列和微队列，分别存储宏任务和微任务。</li>
+<li>调用栈中代码执行，直至执行完毕</li>
+<li>检查是否有微任务要执行。执行微任务队列中的任务，将微任务队列中的事件放入调用栈中去执行。</li>
+<li>当调用栈中无要执行程序时，检查是否有DOM渲染操作，尝试渲染DOM</li>
+<li>检查是否有宏任务需要执行。执行宏任务队列中的任务。</li>
+<li>操作4，5，6，7依次次循环执行….</li>
+</ol>
+</blockquote>
+<p><a href="https://imgtu.com/i/XgyWND"><img src="https://s1.ax1x.com/2022/06/12/XgyWND.png" alt="事件循环"></a></p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>事件循环</tag>
+      </tags>
+  </entry>
 </search>
