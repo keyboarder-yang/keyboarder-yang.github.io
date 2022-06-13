@@ -1769,4 +1769,12 @@ class Info implements SayAll &#123;
         <tag>事件循环</tag>
       </tags>
   </entry>
+  <entry>
+    <title>js学习 --- 正则表达式</title>
+    <url>/2022/06/13/JavaScript/Reg/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>正则</tag>
+      </tags>
+  </entry>
 </search>
