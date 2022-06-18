@@ -369,21 +369,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-06-14
+                    2022-06-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    64
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -401,9 +401,213 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><blockquote>
-<p>正则表达式就是一种文本模式—用来对字符串进行增删改查</p>
-<p>正则表达式使用单个字符串来进行描述，匹配一系列匹配某个句法规则的字符串。</p>
+                <blockquote>
+<p><a target="_blank" rel="noopener" href="https://c.runoob.com/front-end/854/">正则在线测试地址</a></p>
+</blockquote>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><blockquote>
+<ul>
+<li><p>正则表达式就是一种文本模式—用来对字符串进行增删改查</p>
+</li>
+<li><p>正则表达式使用单个字符串来进行描述，匹配一系列匹配某个句法规则的字符串。</p>
+</li>
+<li><p>正则表达式描述了一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合条件的子串等。</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><blockquote>
+<p>构造正则表达式的方法和创建数学表达式的方法一样。也就是用多种元字符与运算符可以将小的表达式结合在一起创建更大的表达式。</p>
+<p>正则表达式的组件可以是：</p>
+<ul>
+<li>单个的字符</li>
+<li>字符集合</li>
+<li>字符范围</li>
+<li>字符间的选择或者所有这些组件的任意组合</li>
+</ul>
+</blockquote>
+<ol>
+<li><h5 id="普通字符、"><a href="#普通字符、" class="headerlink" title="普通字符、"></a>普通字符、</h5><blockquote>
+<p>包括所有大写和小写字母，所有数字，所有标点符号和一些其他符号</p>
+</blockquote>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">[]</td>
+<td align="center">匹配的集合</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">取反(出现在集合中)或者是字符串的开始位置</td>
+</tr>
+<tr>
+<td align="center">[a-z]</td>
+<td align="center">表示一个区间，字母<code>a-z</code></td>
+</tr>
+<tr>
+<td align="center">\.</td>
+<td align="center">匹配 <code>.</code></td>
+</tr>
+<tr>
+<td align="center">\s</td>
+<td align="center">匹配空白符（包括换行）</td>
+</tr>
+<tr>
+<td align="center">\S</td>
+<td align="center">匹配非空白符（不包括换行）</td>
+</tr>
+<tr>
+<td align="center">\w</td>
+<td align="center">匹配字母、数字、下划线 &#x3D;&#x3D;&#x3D;<code> [A-Za-z0-9_]</code></td>
+</tr>
+<tr>
+<td align="center">\W</td>
+<td align="center">匹配除（字母、数字、下划线）之外的</td>
+</tr>
+<tr>
+<td align="center">\b</td>
+<td align="center">匹配一个单词边界，也就是指单词和空格间的位置</td>
+</tr>
+<tr>
+<td align="center">\B</td>
+<td align="center">匹配非单词边界。<code>er\B</code> 能匹配 <code>verb</code> 中的 <code>er</code>，但不能匹配 <code>never</code> 中的<code>er</code></td>
+</tr>
+<tr>
+<td align="center">\d</td>
+<td align="center">匹配一个数字</td>
+</tr>
+<tr>
+<td align="center">\D</td>
+<td align="center">匹配非数字</td>
+</tr>
+</tbody></table>
+<ol start="2">
+<li><h5 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h5><blockquote>
+<p>特殊字符就是一些有特殊含义的字符，要匹配这些字符，必须首先使字符转义。</p>
+</blockquote>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$</td>
+<td align="center">匹配输入字符串的结尾位置</td>
+</tr>
+<tr>
+<td align="center">()</td>
+<td align="center">标记一个子表达式的开始和结束位置</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">匹配前面的子表达式0次或者多次   (≥0)</td>
+</tr>
+<tr>
+<td align="center">+</td>
+<td align="center">匹配前面的子表达式1次或者多次   (≥1)</td>
+</tr>
+<tr>
+<td align="center">.</td>
+<td align="center">匹配除换行符 \n 之外的任何单字符。</td>
+</tr>
+<tr>
+<td align="center">[</td>
+<td align="center">标记一个中括号表达式的开始。要匹配 [，请使用 \[。</td>
+</tr>
+<tr>
+<td align="center">]</td>
+<td align="center">标记一个中括号表达式的结束。要匹配 ]，请使用 \]。</td>
+</tr>
+<tr>
+<td align="center">?</td>
+<td align="center">匹配前面的子表达式0次或1次  (&#x3D;0 || &#x3D;1)。要匹配 ? 字符，请使用 ?。</td>
+</tr>
+<tr>
+<td align="center">\</td>
+<td align="center">将下一个字符标记为或特殊字符、或原义字符、或向后引用、或八进制转义符</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">m匹配输入字符串的开始位置，除非在方括号表达式中使用，当该符号在方括号表达式中使用时，表示不接受该方括号表达式中的字符集合。要匹配 ^ 字符本身，请使用 ^。</td>
+</tr>
+<tr>
+<td align="center">|</td>
+<td align="center">指明两项之间的一个选择。要匹配</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li><h5 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h5><blockquote>
+<p>限定符用来指定正则表达式的一个给定组件必须要出现多少次才能满足匹配</p>
+<ul>
+<li><code>*</code> :0次或者多次</li>
+<li><code>+</code>:1次或者多次</li>
+<li><code>?</code>:0次或者1次</li>
+<li><code>&#123;n&#125;</code>:匹配确定的n次</li>
+<li><code>&#123;n,&#125;</code>:至少匹配n次</li>
+<li><code>&#123;n,m&#125;</code>:至少n次，至多m次</li>
+</ul>
+<blockquote>
+<p>在 <code>*</code>和<code>+</code>之后添加<code>?</code>表示最小匹配</p>
+</blockquote>
+</blockquote>
+</li>
+<li><h5 id="捕获元"><a href="#捕获元" class="headerlink" title="捕获元"></a>捕获元</h5><blockquote>
+<ul>
+<li><code>?=</code>:<code>exp1(?=exp2)</code>  查找<code>exp2</code> 前面的<code>exp1</code></li>
+<li><code>?&lt;=</code>:<code>(?&lt;=exp2)exp1</code>  查找<code>exp2</code> 后面的<code>exp1</code></li>
+<li><code>?!</code>:<code>exp1(?!exp2)</code>  查找后面不是<code>exp2</code> 的<code>exp1</code></li>
+<li><code>?&lt;!</code>:<code>(?&lt;!exp2)exp1</code>  查找前面不是<code>exp2</code> 的<code>exp1</code></li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h4 id="修饰符（常用）"><a href="#修饰符（常用）" class="headerlink" title="修饰符（常用）"></a>修饰符（常用）</h4><table>
+<thead>
+<tr>
+<th align="center">修饰符</th>
+<th align="center">含义</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">i</td>
+<td align="center"><code>ignore</code> - 不区分大小写</td>
+<td align="center">将匹配设置为不区分大小写，搜索时不区分大小写: A 和 a 没有区别。</td>
+</tr>
+<tr>
+<td align="center">g</td>
+<td align="center"><code>global</code> - 全局匹配</td>
+<td align="center">查找所有的匹配项。</td>
+</tr>
+<tr>
+<td align="center">m</td>
+<td align="center"><code>multiline</code> - 多行匹配</td>
+<td align="center">使边界字符 <strong>^</strong> 和 <strong>$</strong> 匹配每一行的开头和结尾，记住是多行，而不是整个字符串的开头和结尾。</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center">特殊字符圆点 <strong>.</strong> 中包含换行符 <strong>\n</strong></td>
+<td align="center">默认情况下的圆点 <strong>.</strong> 是匹配除换行符 <strong>\n</strong> 之外的任何字符，加上 <strong>s</strong> 修饰符之后, <strong>.</strong> 中包含换行符 \n。</td>
+</tr>
+</tbody></table>
+<h4 id="常用正则表达式"><a href="#常用正则表达式" class="headerlink" title="常用正则表达式"></a>常用正则表达式</h4><blockquote>
+<ul>
+<li>email: <code>**^\w+([-+.]\w+)\*@\w+([-.]\w+)\*\.\w+([-.]\w+)\*$**</code></li>
+<li>phone: <code>**^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d&#123;8&#125;$**</code></li>
+<li>Id（15或者18位）: <code>**(^\d&#123;15&#125;$)|(^\d&#123;18&#125;$)|(^\d&#123;17&#125;(\d|X|x)$)**</code></li>
+<li>password(以字母开头，长度在6~18之间，只能包含字母、数字和下划线): <code>**^[a-zA-Z]\w&#123;5,17&#125;$**</code></li>
+<li>password(必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间): <code>**^(?=.\*\d)(?=.\*[a-z])(?=.\*[A-Z])[a-zA-Z0-9]&#123;8,10&#125;$**</code></li>
+<li>date（<code>yyyy-mm-dd</code>）: <code>**^\d&#123;4&#125;-\d&#123;1,2&#125;-\d&#123;1,2&#125;**</code></li>
+</ul>
 </blockquote>
 
                 
@@ -794,7 +998,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">9.8k</span>
+                        class="white-color">10.9k</span>
             
             
             
