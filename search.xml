@@ -1770,9 +1770,117 @@ class Info implements SayAll &#123;
       </tags>
   </entry>
   <entry>
+    <title>js学习 --- 递归</title>
+    <url>/2022/06/16/JavaScript/Recursion/</url>
+    <content><![CDATA[<h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><blockquote>
+<p>定义：程序调用自身的编程技巧成为递归（recursion）。</p>
+<p>思想：重复利用函数本身能实现的功能，按照顺序进行不断的自调用</p>
+<p>核心：建立递归函数</p>
+<ul>
+<li>边界条件（递归结束条件）</li>
+<li>递归前进段</li>
+<li>递归返回段</li>
+</ul>
+<p>当边界条件不满足时，递归前进；当递归条件满足时，递归返回。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>递归</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js学习 --- 树的遍历</title>
+    <url>/2022/06/17/JavaScript/TreeTraversal/</url>
+    <content><![CDATA[<h4 id="树的遍历方式"><a href="#树的遍历方式" class="headerlink" title="树的遍历方式"></a>树的遍历方式</h4><h5 id="1-深度优先搜索（depth-first-search）"><a href="#1-深度优先搜索（depth-first-search）" class="headerlink" title="1. 深度优先搜索（depth-first-search）"></a>1. 深度优先搜索（depth-first-search）</h5><blockquote>
+<p>从根节点触发，尽可能深的搜索树的结点</p>
+<p>其中二叉树又分为：</p>
+</blockquote>
+<ul>
+<li><p>先序遍历：根 、左、右</p>
+</li>
+<li><p>中序遍历：左、根、右</p>
+</li>
+<li><p>后序遍历：左、右、根</p>
+<blockquote>
+<p>先序、中序、后序都是以 根节点来定义的。</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="2-广度优先搜索（breath-first-search）"><a href="#2-广度优先搜索（breath-first-search）" class="headerlink" title="2. 广度优先搜索（breath-first-search）"></a>2. 广度优先搜索（breath-first-search）</h5><blockquote>
+<p>简单的说，广度优先搜索是从根节点开始，沿着树的宽度遍历树的节点。如果所有节点均被访问，则算法中止。</p>
+</blockquote>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><blockquote>
+<p>在JavaScript中，数据一般都不会是二叉树，所以中序就没了实际的意义。所以以下都是基于整个树的遍历，而非特定的二叉树：</p>
+</blockquote>
+<h5 id="1-dfs-先序-递归"><a href="#1-dfs-先序-递归" class="headerlink" title="1. dfs-先序-递归"></a>1. dfs-先序-递归</h5><blockquote>
+<p>思想：先遍历根节点再遍历子节点（左右节点）</p>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">readNodes</span><span class="token punctuation">(</span><span class="token parameter">nodes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    nodes<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> flag <span class="token operator">=</span> item<span class="token punctuation">.</span>children <span class="token operator">&amp;&amp;</span> item<span class="token punctuation">.</span>children<span class="token punctuation">.</span>length
+        <span class="token function">callback</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+        flag <span class="token operator">&amp;&amp;</span> <span class="token function">readNodes</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>children<span class="token punctuation">,</span> callback<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<h5 id="2-dfs-后序-递归"><a href="#2-dfs-后序-递归" class="headerlink" title="2. dfs-后序-递归"></a>2. dfs-后序-递归</h5><blockquote>
+<p>思想：先遍历子节点（左右节点）再遍历根节点</p>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">readNodes</span><span class="token punctuation">(</span><span class="token parameter">nodes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    nodes<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">let</span> flag <span class="token operator">=</span> item<span class="token punctuation">.</span>children <span class="token operator">&amp;&amp;</span> item<span class="token punctuation">.</span>children<span class="token punctuation">.</span>length
+        flag <span class="token operator">&amp;&amp;</span> <span class="token function">readNodes</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>children<span class="token punctuation">,</span> callback<span class="token punctuation">)</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<h5 id="3-dfs-循环"><a href="#3-dfs-循环" class="headerlink" title="3. dfs-循环"></a>3. dfs-循环</h5><blockquote>
+<p>思想：维护一个数组，先把所有根节点放入该数组，当数组中有值时，一直执行</p>
+<ul>
+<li>从首部弹出一个节点</li>
+<li>遍历这个节点（执行回调函数）</li>
+<li>把这个节点的子节点放入数组中去，根据放入数组中的头部或者尾部：<ul>
+<li>放入头部：深度优先遍历</li>
+<li>放入尾部：广度优先遍历（方法4）</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">readNodes</span><span class="token punctuation">(</span><span class="token parameter">tree<span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> node<span class="token punctuation">,</span> curTree <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>tree<span class="token punctuation">]</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>node <span class="token operator">=</span> curTree<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+        node<span class="token punctuation">.</span>children <span class="token operator">&amp;&amp;</span> curTree<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span><span class="token operator">...</span>node<span class="token punctuation">.</span>children<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<h5 id="4-bfs-循环"><a href="#4-bfs-循环" class="headerlink" title="4. bfs-循环"></a>4. bfs-循环</h5><pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">readNodes</span><span class="token punctuation">(</span><span class="token parameter">tree<span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">let</span> node<span class="token punctuation">,</span> curTree <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>tree<span class="token punctuation">]</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>node <span class="token operator">=</span> curTree<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+        node<span class="token punctuation">.</span>children <span class="token operator">&amp;&amp;</span> curTree<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">...</span>node<span class="token punctuation">.</span>children<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>树</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>js学习 --- 正则表达式</title>
-    <url>/2022/06/13/JavaScript/Reg/</url>
-    <content><![CDATA[]]></content>
+    <url>/2022/06/13/JavaScript/RegExp/</url>
+    <content><![CDATA[<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><blockquote>
+<p>正则表达式就是一种文本模式—用来对字符串进行增删改查</p>
+<p>正则表达式使用单个字符串来进行描述，匹配一系列匹配某个句法规则的字符串。</p>
+</blockquote>
+]]></content>
       <tags>
         <tag>正则</tag>
       </tags>
