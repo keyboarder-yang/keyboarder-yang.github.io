@@ -2090,7 +2090,7 @@ class Info implements SayAll &#123;
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>前端学习路线（转）</title>
     <url>/2022/06/19/RoadMap/web-road-map/</url>
     <content><![CDATA[<h1 id="前端学习路线"><a href="#前端学习路线" class="headerlink" title="前端学习路线"></a>前端学习路线</h1><blockquote>
 <p><a href="https://www.bilibili.com/video/BV1nh411e7oG/">文档来源—B站鱼皮</a></p>
@@ -2818,5 +2818,11 @@ class Info implements SayAll &#123;
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>RoadMap</category>
+      </categories>
+      <tags>
+        <tag>学习路线</tag>
+      </tags>
   </entry>
 </search>
