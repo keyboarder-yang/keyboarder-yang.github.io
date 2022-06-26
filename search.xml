@@ -2754,7 +2754,7 @@ class Info implements SayAll &#123;
 <h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><h5 id="1-通过vue-js-cookie"><a href="#1-通过vue-js-cookie" class="headerlink" title="1. 通过vue-js-cookie"></a>1. 通过<code>vue-js-cookie</code></h5><ol>
 <li><p>安装</p>
 <blockquote>
-<pre class="language-node" data-language="node"><code class="language-node">npm install 1js-cookie --save</code></pre>
+<pre class="language-none"><code class="language-none">npm install js-cookie --save</code></pre>
 </blockquote>
 </li>
 <li><p>封装—<code>auth.js</code></p>
@@ -2851,6 +2851,106 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
       </categories>
       <tags>
         <tag>vuex</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DayJs 中一些常用操作</title>
+    <url>/2022/06/26/DayJs/CommonCommand/</url>
+    <content><![CDATA[<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><ol>
+<li><h5 id="初始化日期-x2F-时间"><a href="#初始化日期-x2F-时间" class="headerlink" title="初始化日期&#x2F;时间"></a>初始化日期&#x2F;时间</h5><blockquote>
+<p>格式：<code>dayjs().formate(type)</code>，其中type可选列表如下</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">含义</th>
+<th align="center">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">YY</td>
+<td align="center">年份后两位</td>
+<td align="center">22</td>
+</tr>
+<tr>
+<td align="center">YYYY</td>
+<td align="center">年份</td>
+<td align="center">2022</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">月份1位（0-11）</td>
+<td align="center">6</td>
+</tr>
+<tr>
+<td align="center">MM</td>
+<td align="center">月份（0-11）</td>
+<td align="center">06</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">日（0-31）</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">DD</td>
+<td align="center">日（0-31）</td>
+<td align="center">02</td>
+</tr>
+<tr>
+<td align="center">H</td>
+<td align="center">时0-23</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">HH</td>
+<td align="center">时0-23</td>
+<td align="center">05</td>
+</tr>
+<tr>
+<td align="center">h</td>
+<td align="center">时0-12</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">hh</td>
+<td align="center">时0-12</td>
+<td align="center">05</td>
+</tr>
+<tr>
+<td align="center">m</td>
+<td align="center">分0-59</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">mm</td>
+<td align="center">分0-59</td>
+<td align="center">05</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center">秒0-59</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">ss</td>
+<td align="center">秒0-59</td>
+<td align="center">05</td>
+</tr>
+</tbody></table>
+</li>
+<li><h5 id="格式化日期时间"><a href="#格式化日期时间" class="headerlink" title="格式化日期时间"></a>格式化日期时间</h5><blockquote>
+<p>格式： <code>dayjs(value).formdate(type)</code>,value为待转换的值，格式和type的格式应保持一致或者为空</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>DayJs</category>
+      </categories>
+      <tags>
+        <tag>dayjs</tag>
       </tags>
   </entry>
 </search>
