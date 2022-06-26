@@ -2941,7 +2941,7 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 </tbody></table>
 </li>
 <li><h5 id="格式化日期时间"><a href="#格式化日期时间" class="headerlink" title="格式化日期时间"></a>格式化日期时间</h5><blockquote>
-<p>格式： <code>dayjs(value).formdate(type)</code>,value为待转换的值，格式和type的格式应保持一致或者为空</p>
+<p>格式： <code>dayjs(value).formdate(type)</code>,value为待转换的值</p>
 </blockquote>
 </li>
 </ol>
